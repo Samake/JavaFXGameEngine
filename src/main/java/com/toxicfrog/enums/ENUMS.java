@@ -1,0 +1,24 @@
+package com.toxicfrog.enums;
+
+public class ENUMS {
+
+	public enum GAMESTATE {
+		LOADING, MAIN, SETTINGS, STARTGAME, INGAME, PAUSED, ENDGAME, SHOP, TASKS, UNLOCKS
+	}
+	
+	public enum CHARACTER {
+		CHAR_01, CHAR_02, CHAR_03, CHAR_04
+	}
+	
+	public enum WEAPON {
+		RIFLE, PISTOL, SHOTGUN, WAND
+	}
+	
+	public enum ENTITYTYPE {
+		PLAYER, ENEMY, EFFECT, ITEM, OBJECT, PROJECTILE, TEXT, WEAPON, DECAL, SOUND, DAMAGEZONE
+	}
+	
+	public enum ANIMATION {
+		IDLE, DEATH, FALL, HIT, JUMPEND, JUMPSTART, ROLL, WALK, FLY
+	}
+}
