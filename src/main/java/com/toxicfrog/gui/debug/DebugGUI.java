@@ -8,21 +8,22 @@ import com.toxicfrog.settings.Settings;
 import com.toxicfrog.sound.SoundManager;
 
 import javafx.geometry.Insets;
-import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import javafx.stage.Popup;
 
 public class DebugGUI extends Popup {
 
 	private VBox guiPane = new VBox();
 	
-	private Label fps;
-	private Label levelEntities;
-	private Label renderedEntities;
-	private Label sounds;
-	private Label dangerLevel;
-	private Label currenEmenies;
-	private Label killCount;
+	private Text fps;
+	private Text levelEntities;
+	private Text renderedEntities;
+	private Text sounds;
+	private Text dangerLevel;
+	private Text currenEmenies;
+	private Text killCount;
 	
 	public DebugGUI() {
 		double popupWidth = Settings.WINDOW_WIDTH;
@@ -53,33 +54,75 @@ public class DebugGUI extends Popup {
 		debugBox.setPadding(new Insets(5));
 		debugBox.setSpacing(5);
 		
-		fps = new Label("FPS: 0");
-		fps.getStyleClass().add("game-popup-label");
+		Text fpsText = new Text("FPS: ");
+		fpsText.getStyleClass().add("text-label");
 		
-		levelEntities = new Label("Entities: 0");
-		levelEntities.getStyleClass().add("game-popup-label");
+		fps = new Text("0");
+		fps.getStyleClass().add("text-label-green");
 		
-		renderedEntities = new Label("Rendered: 0");
-		renderedEntities.getStyleClass().add("game-popup-label");
+		TextFlow fpsFullText = new TextFlow();
+		fpsFullText.getChildren().addAll(fpsText, fps);
 		
-		sounds = new Label("Sounds: 0");
-		sounds.getStyleClass().add("game-popup-label");
+		Text levelEntitiesText = new Text("Entities: ");
+		levelEntitiesText.getStyleClass().add("text-label");
 		
-		dangerLevel = new Label("Gefahrstufe: 0");
-		dangerLevel.getStyleClass().add("game-popup-label");
+		levelEntities = new Text("0");
+		levelEntities.getStyleClass().add("text-label-blue");
 		
-		currenEmenies = new Label("Current enemies: 0");
-		currenEmenies.getStyleClass().add("game-popup-label");
+		TextFlow levelEntitiesFullText = new TextFlow();
+		levelEntitiesFullText.getChildren().addAll(levelEntitiesText, levelEntities);
+
+		Text renderedEntitiesText = new Text("Rendered: ");
+		renderedEntitiesText.getStyleClass().add("text-label");
 		
-		killCount = new Label("Enemies killed: 0");
-		killCount.getStyleClass().add("game-popup-label");
+		renderedEntities = new Text("0");
+		renderedEntities.getStyleClass().add("text-label-blue");
+		
+		TextFlow renderedEntitiesFullText = new TextFlow();
+		renderedEntitiesFullText.getChildren().addAll(renderedEntitiesText, renderedEntities);
+		
+		Text soundsText = new Text("Sounds: ");
+		soundsText.getStyleClass().add("text-label");
+		
+		sounds = new Text("0");
+		sounds.getStyleClass().add("text-label-blue");
+		
+		TextFlow soundsFullText = new TextFlow();
+		soundsFullText.getChildren().addAll(soundsText, sounds);
+		
+		Text dangerLevelText = new Text("Dangerlevel: ");
+		dangerLevelText.getStyleClass().add("text-label");
+		
+		dangerLevel = new Text("0");
+		dangerLevel.getStyleClass().add("text-label-blue");
+		
+		TextFlow dangerLevelFullText = new TextFlow();
+		dangerLevelFullText.getChildren().addAll(dangerLevelText, dangerLevel);
+		
+		Text currenEmeniesText = new Text("Current enemies: ");
+		currenEmeniesText.getStyleClass().add("text-label");
+		
+		currenEmenies = new Text("0");
+		currenEmenies.getStyleClass().add("text-label-blue");
+		
+		TextFlow currenEmeniesFullText = new TextFlow();
+		currenEmeniesFullText.getChildren().addAll(currenEmeniesText, currenEmenies);
+		
+		Text killCountText = new Text("Enemies killed: ");
+		killCountText.getStyleClass().add("text-label");
+		
+		killCount = new Text("0");
+		killCount.getStyleClass().add("text-label-blue");
+		
+		TextFlow killCountFullText = new TextFlow();
+		killCountFullText.getChildren().addAll(killCountText, killCount);
 		
 		double xPos = Settings.WINDOW_WIDTH * 0.015;
 		double yPos = Settings.WINDOW_HEIGHT * 0.25;
 		
 		VBox.setMargin(debugBox, new Insets(yPos, 0, 0, xPos));
 		
-		debugBox.getChildren().addAll(fps, levelEntities, renderedEntities, sounds, dangerLevel, currenEmenies, killCount);
+		debugBox.getChildren().addAll(fpsFullText, levelEntitiesFullText, renderedEntitiesFullText, soundsFullText, dangerLevelFullText, currenEmeniesFullText, killCountFullText);
 		
 		guiPane.getChildren().addAll(debugBox);
 	}
@@ -89,33 +132,42 @@ public class DebugGUI extends Popup {
 			if (game.level != null) {
 				
 				if (fps != null) {
-					fps.setText("FPS: " + GameLauncher.FPS);
+					
+					if (GameLauncher.FPS > 30) {
+						fps.getStyleClass().clear();
+						fps.getStyleClass().add("text-label-green");
+					} else {
+						fps.getStyleClass().clear();
+						fps.getStyleClass().add("text-label-red");
+					}
+					
+					fps.setText(String.valueOf(GameLauncher.FPS));
 				}
 				
 				if (levelEntities != null) {
 					int entityCount = game.level.entities.size() + game.level.textEntities.size();
-					levelEntities.setText("Entities: " + entityCount);
+					levelEntities.setText(String.valueOf(entityCount));
 				}
 		
 				if (renderedEntities != null) {
 					int renderedCount = game.level.renderList.size() + game.level.renderListText.size();
-					renderedEntities.setText("Rendered: " + renderedCount);
+					renderedEntities.setText(String.valueOf(renderedCount));
 				}
 
 				if (sounds != null) {
-					sounds.setText("Sounds: " + SoundManager.soundCount);
+					sounds.setText(String.valueOf(SoundManager.soundCount));
 				}
 				
 				if (dangerLevel != null) {
-					dangerLevel.setText("Gefahrstufe: " + game.level.enemySpawner.dangerLevel);
+					dangerLevel.setText(String.valueOf(game.level.enemySpawner.dangerLevel));
 				}
 				
 				if (currenEmenies != null) {
-					currenEmenies.setText("Aktuelle Gegner: " + game.level.currentEmenyCount);
+					currenEmenies.setText(String.valueOf(game.level.currentEmenyCount));
 				}
 				
 				if (killCount != null) {
-					killCount.setText("Gegner getötet: " + game.level.statistic.killCount);
+					killCount.setText(String.valueOf(game.level.statistic.killCount));
 				}
 			}
 		}

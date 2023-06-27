@@ -33,6 +33,12 @@ public class Utils {
 	    return randomNum;
 	}
 	
+	public static double randomDouble(double min, double max) {
+		double randomNum = rand.nextDouble((max - min) + 1) + min;
+
+	    return randomNum;
+	}
+	
 	public static double computeAngleOfTwoPoints(double x1, double y1, double x2, double y2) {
 		float angle = (float) Math.toDegrees(Math.atan2(y1 - y2, x1 - x2));
 

@@ -11,6 +11,7 @@ public class Settings {
 	public static boolean WINDOW_FULLSCREEN = false;
 	public static boolean RENDER_SHADOWS = true;
 	
+	public static int MAXSOUNDS = 16;
 	public static double MASTERVOLUME = 1.0;
 	public static double MUSICVOLUME = 1.0;
 	
@@ -26,6 +27,7 @@ public class Settings {
 			WINDOW_HEIGHT = Integer.valueOf(properties.getProperty("WINDOW_HEIGHT"));
 			WINDOW_FULLSCREEN = Boolean.valueOf(properties.getProperty("FULLSCREEN"));
 			RENDER_SHADOWS = Boolean.valueOf(properties.getProperty("RENDER_SHADOWS"));
+			MAXSOUNDS = Integer.valueOf(properties.getProperty("MAXSOUNDS"));
 			MASTERVOLUME = Double.valueOf(properties.getProperty("MASTERVOLUME"));
 			MUSICVOLUME = Double.valueOf(properties.getProperty("MUSICVOLUME"));
 			DEBUG_LOG = Boolean.valueOf(properties.getProperty("DEBUG_LOG"));

@@ -21,6 +21,10 @@ public class Item extends Object {
 		
 	}
 	
+	public void collect() {
+		
+	}
+	
 	@Override
 	public void destroy() {
 		super.destroy();

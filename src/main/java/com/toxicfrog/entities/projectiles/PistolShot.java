@@ -1,5 +1,6 @@
 package com.toxicfrog.entities.projectiles;
 
+import com.toxicfrog.balancing.CoreBalance;
 import com.toxicfrog.camera.Camera;
 import com.toxicfrog.entities.characters.Player;
 import com.toxicfrog.entities.weapons.Weapon;
@@ -9,14 +10,14 @@ import com.toxicfrog.utils.Vector2D;
 
 public class PistolShot extends PlayerProjectile {
 
-	public PistolShot(Level level, Vector2D position, Vector2D targetPosition, Player player, Weapon weapon) {
-		super(level, "extras/bullet.png", position, targetPosition, 0.1, 35.0, 300, player, weapon);
+	public PistolShot(Level level, Vector2D position, Vector2D targetPosition, Player player, Weapon weapon, int damage) {
+		super(level, "extras/bullet.png", position, targetPosition, CoreBalance.WEAPON_PROJECTILE_SIZE_PISTOL, CoreBalance.WEAPON_SPEED_PISTOL, CoreBalance.WEAPON_DISTANCE_PISTOL, player, weapon, damage);
 		
 		boundingBox.widthScale = 0.5;
 		boundingBox.heightScale = 0.5;
 		boundingBox.yOffset = height * 0.0;
 		
-		puncture = 1;
+		puncture = CoreBalance.WEAPON_PUNCTURE_PISTOL;
 	}
 
 	@Override

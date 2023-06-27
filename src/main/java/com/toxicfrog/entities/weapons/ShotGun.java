@@ -1,5 +1,6 @@
 package com.toxicfrog.entities.weapons;
 
+import com.toxicfrog.balancing.CoreBalance;
 import com.toxicfrog.cache.Resources;
 import com.toxicfrog.cache.SoundCache;
 import com.toxicfrog.camera.Camera;
@@ -20,7 +21,7 @@ public class ShotGun extends Weapon {
 		boundingBox.heightScale = 0.3;
 		boundingBox.yOffset = height * 0.05;
 		
-		damage = 95;
+		damage = CoreBalance.WEAPON_DAMAGE_SHOTGUN;
 	}
 	
 	@Override
@@ -31,11 +32,12 @@ public class ShotGun extends Weapon {
 			if (input.isLeftMouseClicked()) {
 				shot(input);
 				SoundManager.playSound(SoundCache.getSound(Resources.EFFECT_SHOTGUN_SHOT), InternalSettings.VOLUME_SHOTGUN_SHOT, false);
-//				new ShotGunShot(level, new Vector2D(position.x, position.y), new Vector2D(input.mouseX + 35, input.mouseY - 35), player, this);
-//				new ShotGunShot(level, new Vector2D(position.x, position.y), new Vector2D(input.mouseX + 15, input.mouseY - 15), player, this);
-//				new ShotGunShot(level, new Vector2D(position.x, position.y), new Vector2D(input.mouseX, input.mouseY), player, this);
-//				new ShotGunShot(level, new Vector2D(position.x, position.y), new Vector2D(input.mouseX - 15, input.mouseY + 15), player, this);
-//				new ShotGunShot(level, new Vector2D(position.x, position.y), new Vector2D(input.mouseX - 35, input.mouseY + 35), player, this);
+				
+				new ShotGunShot(level, new Vector2D(position.x, position.y), new Vector2D(input.mousePosition.x + 35, input.mousePosition.y - 35), player, this, damage);
+				new ShotGunShot(level, new Vector2D(position.x, position.y), new Vector2D(input.mousePosition.x + 15, input.mousePosition.y - 15), player, this, damage);
+				new ShotGunShot(level, new Vector2D(position.x, position.y), new Vector2D(input.mousePosition.x, input.mousePosition.y), player, this, damage);
+				new ShotGunShot(level, new Vector2D(position.x, position.y), new Vector2D(input.mousePosition.x - 15, input.mousePosition.y + 15), player, this, damage);
+				new ShotGunShot(level, new Vector2D(position.x, position.y), new Vector2D(input.mousePosition.x - 35, input.mousePosition.y + 35), player, this, damage);
 			}
 		}
 	}
@@ -43,7 +45,7 @@ public class ShotGun extends Weapon {
 	private void shot(Input input) {
 		SoundManager.playSound(SoundCache.getSound(Resources.EFFECT_SHOTGUN_SHOT), InternalSettings.VOLUME_SHOTGUN_SHOT, false);
 		
-		new ShotGunShot(level, new Vector2D(position.x, position.y), new Vector2D(input.mouseWorldPosition.x, input.mouseWorldPosition.y), player, this);
+		new ShotGunShot(level, new Vector2D(position.x, position.y), new Vector2D(input.mouseWorldPosition.x, input.mouseWorldPosition.y), player, this, damage);
 	}
 	
 	@Override

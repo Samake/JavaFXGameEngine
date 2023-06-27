@@ -1,5 +1,6 @@
 package com.toxicfrog.entities.weapons;
 
+import com.toxicfrog.balancing.CoreBalance;
 import com.toxicfrog.cache.Resources;
 import com.toxicfrog.cache.SoundCache;
 import com.toxicfrog.camera.Camera;
@@ -20,7 +21,7 @@ public class Wand extends Weapon {
 		boundingBox.heightScale = 0.15;
 		boundingBox.yOffset = height * 0.0;
 		
-		damage = 15;
+		damage = CoreBalance.WEAPON_DAMAGE_WAND;
 	}
 	
 	@Override
@@ -37,7 +38,7 @@ public class Wand extends Weapon {
 	private void shot(Input input) {
 		SoundManager.playSound(SoundCache.getSound(Resources.EFFECT_GUN_SHOT), InternalSettings.VOLUME_GUN_SHOT, false);
 		
-		new WandShot(level, new Vector2D(position.x, position.y), new Vector2D(input.mouseWorldPosition.x, input.mouseWorldPosition.y), player, this);
+		new WandShot(level, new Vector2D(position.x, position.y), new Vector2D(input.mouseWorldPosition.x, input.mouseWorldPosition.y), player, this, damage);
 	}
 	
 	@Override

@@ -41,8 +41,6 @@ public class HealItem extends Item {
 			
 			if (distance <= (defaultCollectDistance - (defaultCollectDistance * player.magnify)) * InternalSettings.WINDOW_ZOOM) {
 				if (!isCollected) {
-					isCollected = true;
-				} else {
 					defaultSpeed += 0.5 * delta;
 
 					movement.x = player.position.x - position.x;
@@ -59,7 +57,7 @@ public class HealItem extends Item {
 			}
 			
 			if (distance <= width) {
-				destroy();
+				collect();
 			}
 		} else {
 			destroy();
@@ -67,10 +65,19 @@ public class HealItem extends Item {
 	}
 	
 	@Override
+	public void collect() {
+		super.collect();
+		
+		player.heal(25);
+		
+		isCollected = true;
+		
+		destroy();
+	}
+	
+	@Override
 	public void destroy() {
 		super.destroy();
 		
-		player.heal(25);
 	}
-
 }

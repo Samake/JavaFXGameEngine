@@ -203,6 +203,9 @@ public class GameScene extends Scene {
 			case INGAME:
 				setRoot(gameView);
 				break;
+			case PAUSED:
+				setRoot(null);
+				break;
 			case ENDGAME:
 				setRoot(null);
 				break;
@@ -215,6 +218,8 @@ public class GameScene extends Scene {
 			case UNLOCKS:
 				setRoot(null);
 				break;
+		default:
+			break;
 		}
 	}
 }

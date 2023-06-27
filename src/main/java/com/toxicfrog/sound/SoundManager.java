@@ -8,13 +8,11 @@ import javafx.scene.media.MediaPlayer;
 
 public class SoundManager {
 	
-	final private static int MAXSOUNDS = 16;
-	
 	public static int soundCount = 0;
 
 	public static MediaPlayer playSound(Media media, double volume, boolean infinite) {
 		
-		if (soundCount < MAXSOUNDS) {
+		if (soundCount < Settings.MAXSOUNDS) {
 			final MediaPlayer player = new MediaPlayer(media);
 			player.setVolume(volume * Settings.MASTERVOLUME);
 			

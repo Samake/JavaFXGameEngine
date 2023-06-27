@@ -3,11 +3,11 @@
 	-palette-dark: #091014;
 	-palette-gray: #111111;
 	-palette-light-gray: #333333;
-    -palette-red: #ff1031;
-    -palette-orange: #ff9a00;
-    -palette-yellow: #ffff96;
-    -palette-green: #55c538;
-    -palette-blue: #1199ff;
+	-palette-red: #ff1031;
+	-palette-orange: #ff9a00;
+	-palette-yellow: #ffff96;
+	-palette-green: #55c538;
+	-palette-blue: #1199ff;
 }
 
 /* Loading Pane */
@@ -255,6 +255,38 @@
     -fx-text-fill: -palette-yellow;
     -fx-font-size: 12px;
     -fx-effect: dropshadow(gaussian, -palette-gray, 3, 3, 0, 0);
+}
+
+/* Text Label */
+.text-label {
+    -fx-font-family: "Hardpixel";
+    -fx-fill: -palette-yellow;
+    -fx-font-size: 12px;
+    -fx-effect: dropshadow(gaussian, -palette-gray, 2, 2, 0, 0);
+}
+
+/* Text Label Green*/
+.text-label-green {
+    -fx-font-family: "Hardpixel";
+    -fx-fill: -palette-green;
+    -fx-font-size: 12px;
+    -fx-effect: dropshadow(gaussian, -palette-gray, 2, 2, 0, 0);
+}
+
+/* Text Label Red*/
+.text-label-red {
+    -fx-font-family: "Hardpixel";
+    -fx-fill: -palette-red;
+    -fx-font-size: 12px;
+    -fx-effect: dropshadow(gaussian, -palette-gray, 2, 2, 0, 0);
+}
+
+/* Text Label Blue*/
+.text-label-blue {
+    -fx-font-family: "Hardpixel";
+    -fx-fill: -palette-blue;
+    -fx-font-size: 12px;
+    -fx-effect: dropshadow(gaussian, -palette-gray, 2, 2, 0, 0);
 }
 
 .image-button-box {

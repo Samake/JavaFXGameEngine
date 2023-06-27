@@ -14,15 +14,19 @@ public class PlayerProjectile extends Projectile {
 
 	public Player player;
 	public Weapon weapon;
+	
+	
 	public int puncture = 1;
+	public int damage = 1;
 	
 	private Entity lastIntersectedEnemy = null;
 	
-	public PlayerProjectile(Level level, String imagePath, Vector2D position, Vector2D targetPosition, double scale, double speed, int maxDistance, Player player, Weapon weapon) {
+	public PlayerProjectile(Level level, String imagePath, Vector2D position, Vector2D targetPosition, double scale, double speed, int maxDistance, Player player, Weapon weapon, int damage) {
 		super(level, imagePath, position, targetPosition, scale, speed, maxDistance);
 
 		this.player = player;
 		this.weapon = weapon;
+		this.damage = damage;
 		
 		if (player != null) {
 			if (player.isFlipped) {
@@ -52,7 +56,7 @@ public class PlayerProjectile extends Projectile {
 						Enemy enemy = (Enemy) entity;
 						
 						if (enemy != null) {
-							enemy.hit(weapon.damage, velocity);
+							enemy.hit(damage, velocity);
 
 				            puncture -= 1;
 				            lastIntersectedEnemy = entity;

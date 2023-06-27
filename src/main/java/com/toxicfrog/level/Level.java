@@ -28,6 +28,7 @@ import com.toxicfrog.enums.ENUMS.ENTITYTYPE;
 import com.toxicfrog.enums.ENUMS.WEAPON;
 import com.toxicfrog.gui.GameScene;
 import com.toxicfrog.logging.Log;
+import com.toxicfrog.loot.LootManager;
 import com.toxicfrog.settings.InternalSettings;
 import com.toxicfrog.settings.Path;
 import com.toxicfrog.settings.Settings;
@@ -60,6 +61,8 @@ public class Level {
 	public int dangerLevel = 0;
 	public int currentEmenyCount = 0;
 	
+	public boolean isRunning = false;
+	
 	private long lastTick = System.currentTimeMillis();
 	
 	public Level(int width, int height, CHARACTER character, WEAPON weapon, long duration) {
@@ -67,6 +70,12 @@ public class Level {
 		this.height = height;
 		this.duration = duration;
 		
+		start(width, height, character, weapon, duration);
+		
+		Log.print("Level were started. Size: " + width + "x" + height + ", Duration: " + getDuration());
+	}
+
+	private void start(int width, int height, CHARACTER character, WEAPON weapon, long duration) {
 		backgroundImage = new Image(Path.TEXTURE_PATH + "environment/ground2_dark.png", InternalSettings.DEFAULT_TEXTURE_SIZE * 2, InternalSettings.DEFAULT_TEXTURE_SIZE * 2, false, false);
 		
 		statistic = new Statistic();
@@ -84,7 +93,9 @@ public class Level {
 		
 		lastTick = System.currentTimeMillis();
 		
-		Log.print("Level were started. Size: " + width + "x" + height + ", Duration: " + getDuration());
+		LootManager.reset();
+		
+		isRunning = true;
 	}
 
 	private Player addPlayerToLevel(double width, double height, CHARACTER character) {
@@ -225,15 +236,15 @@ public class Level {
 	        }
 	    });
 		
-		if (player != null && !player.isDeath) {
+		if (player != null && !player.isDeath && isRunning) {
 			long currentTick = System.currentTimeMillis();
 			
-			if (lastTick + 1000 + delta <= currentTick) {
-				duration -= 1000 + delta;
+			if (lastTick + 1000 * delta <= currentTick) {
+				duration -= 1000 * delta;
 				lastTick = currentTick;
 				
 				if (duration <= 0) {
-					stopGame();
+					stop();
 				}
 			}
 			
@@ -242,8 +253,10 @@ public class Level {
 				dangerLevel = enemySpawner.dangerLevel;
 			}
 		} else {
-			stopGame();
+			stop();
 		}
+		
+		LootManager.update(this, player, delta);
     }
 	
 	private boolean checkIfInScene(Entity entity, Camera camera) {
@@ -262,9 +275,26 @@ public class Level {
 		return false;
 	}
 
-	private void stopGame() {
-	
+	private void stop() {
+		List<Entity> deleteEntityList = new ArrayList<Entity>(entities);
+
+		for (Entity entity : deleteEntityList) {
+			if (entity != null) {
+				if (!entity.type.equals(ENTITYTYPE.PLAYER)) {
+					removeEntity(entity);	
+				}
+			}
+		}
 		
+		List<TextEntity> deleteTextEntityList = new ArrayList<TextEntity>(textEntities);
+		
+		for (TextEntity entity : deleteTextEntityList) {
+			if (entity != null) {
+				removeTextEntity(entity);
+			}
+		}
+		
+		isRunning = false;
 	}
 
 	public void addEntity(Entity entity) {
@@ -276,6 +306,10 @@ public class Level {
 	public void removeEntity(Entity entity) {
 		if (entities.contains(entity)) {
 			entities.remove(entity);
+			
+			LootManager.remove(entity);
+			
+			entity = null;
 		}
 	}
 	
@@ -288,6 +322,7 @@ public class Level {
 	public void removeTextEntity(TextEntity entity) {
 		if (textEntities.contains(entity)) {
 			textEntities.remove(entity);
+			entity = null;
 		}
 	}
 	
@@ -298,10 +333,20 @@ public class Level {
 		return String.format("%02d:%02d", minute, second);
 	}
 
-	public void stop() {
-		for (Entity entity : entities) {
+	public void destroy() {
+		List<Entity> deleteEntityList = new ArrayList<Entity>(entities);
+
+		for (Entity entity : deleteEntityList) {
 			if (entity != null) {
-				entity = null;
+				removeEntity(entity);
+			}
+		}
+		
+		List<TextEntity> deleteTextEntityList = new ArrayList<TextEntity>(textEntities);
+		
+		for (TextEntity entity : deleteTextEntityList) {
+			if (entity != null) {
+				removeTextEntity(entity);
 			}
 		}
 		

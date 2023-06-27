@@ -45,8 +45,6 @@ public class XPGem extends Item {
 			
 			if (distance <= (defaultCollectDistance - (defaultCollectDistance * player.magnify)) * InternalSettings.WINDOW_ZOOM) {
 				if (!isCollected) {
-					isCollected = true;
-				} else {
 					defaultSpeed += 0.5 * delta;
 					rotation += speed * 5 * delta;
 
@@ -64,7 +62,7 @@ public class XPGem extends Item {
 			}
 			
 			if (distance <= width) {
-				destroy();
+				collect();
 			}
 		} else {
 			destroy();
@@ -72,11 +70,20 @@ public class XPGem extends Item {
 	}
 	
 	@Override
-	public void destroy() {
-		super.destroy();
-		
+	public void collect() {
+		super.collect();
+
 		player.addExp(amount);
 		SoundManager.playSound(SoundCache.getSound(Resources.EFFECT_COLLECT_GEM), InternalSettings.VOLUME_COLLECT_GEM, false);
+		
+		isCollected = true;
+		
+		destroy();
 	}
+	
+	@Override
+	public void destroy() {
+		super.destroy();
 
+	}
 }

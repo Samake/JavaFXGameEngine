@@ -1,5 +1,6 @@
 package com.toxicfrog.level;
 
+import com.toxicfrog.balancing.CoreBalance;
 import com.toxicfrog.entities.characters.Player;
 import com.toxicfrog.entities.enemies.Bat01;
 import com.toxicfrog.entities.enemies.Demon01;
@@ -39,7 +40,7 @@ public class EnemySpawner {
 	}
 
 	public void update() {
-		if (isStarted) {
+		if (isStarted && player != null && !player.isDeath) {
 			long currentTick = System.currentTimeMillis();
 			
 			if (currentTick > lastTickMain + tickCount) {
@@ -51,9 +52,9 @@ public class EnemySpawner {
 				lastTickMain = currentTick;
 			}
 			
-			maxEnemies = (dangerLevel + 1) * 15;
+			maxEnemies = (dangerLevel + 1) * CoreBalance.NPC_MAX_SPAWN_VALUE;
 			
-			if (currentTick > lastTickPermn + 3000) {
+			if (currentTick > lastTickPermn + CoreBalance.NPC_SPAWN_TICKCOUNT) {
 				additionalEnemies += 1;
 				
 				lastTickPermn = currentTick;
@@ -63,7 +64,13 @@ public class EnemySpawner {
 				
 				if (missedEnemies > 0) {
 					for (int i = 0; i < missedEnemies; i++) {
-						addRandomEnemy(Utils.randomInteger(0, dangerLevel));
+						Vector2D position = Utils.getPositionArroundVector(player.position, Utils.randomDouble(0, 360), Utils.randomDouble(CoreBalance.NPC_MIN_SPAWN_DISTANCE, CoreBalance.NPC_MAX_SPAWN_DISTANCE));
+						
+						if (position.x >= 0 && position.x <= level.width) {
+							if (position.y >= 0 && position.y <= level.height) {
+								addRandomEnemy(Utils.randomInteger(0, dangerLevel), position);
+							}
+						}
 					}
 				}
 			}
@@ -72,29 +79,36 @@ public class EnemySpawner {
 	
 	private void initFirstSpawn() {
 		for (int i = 0; i < maxEnemies; i++) {
-			addRandomEnemy(Utils.randomInteger(0, dangerLevel));
+			Vector2D position = Utils.getPositionArroundVector(player.position, Utils.randomDouble(0, 360), Utils.randomDouble(CoreBalance.NPC_MIN_SPAWN_DISTANCE, CoreBalance.NPC_MAX_SPAWN_DISTANCE));
+			
+			if (position.x >= 0 && position.x <= level.width) {
+				if (position.y >= 0 && position.y <= level.height) {
+					addRandomEnemy(Utils.randomInteger(0, dangerLevel), position);
+				}
+			}
 		}
 	}
 	
-	private void addRandomEnemy(int randomValue) {
+	private void addRandomEnemy(int randomValue, Vector2D position) {
 		switch(randomValue) {
 			case 0 :
-				int elitePercent = Utils.randomInteger(0, 100);
+				int elitePercent = Utils.randomInteger(0, 1000);
 				
-				if (elitePercent >= 90) {
-					level.addEntity(new Demon01Elite(level, new Vector2D(Utils.randomInteger(0, (int) level.width), Utils.randomInteger(0, (int) level.height)), 0.0, player));
+				if (elitePercent >= CoreBalance.NPC_ELITE_SPAWN_VALUE) {
+					level.addEntity(new Demon01Elite(level, position, 0.0, player));
 				} else {
-					level.addEntity(new Demon01(level, new Vector2D(Utils.randomInteger(0, (int) level.width), Utils.randomInteger(0, (int) level.height)), 0.0, player));
+					level.addEntity(new Demon01(level, position, 0.0, player));
 				}
+				
 				break;
 			case 1 :
-				level.addEntity(new Demon02(level, new Vector2D(Utils.randomInteger(0, (int) level.width), Utils.randomInteger(0, (int) level.height)), 0.0, player));
+				level.addEntity(new Demon02(level, position, 0.0, player));
 				break;
 			case 2 :
-				level.addEntity(new Demon03(level, new Vector2D(Utils.randomInteger(0, (int) level.width), Utils.randomInteger(0, (int) level.height)), 0.0, player));
+				level.addEntity(new Demon03(level, position, 0.0, player));
 				break;
 			case 3 :
-				level.addEntity(new Bat01(level, new Vector2D(Utils.randomInteger(0, (int) level.width), Utils.randomInteger(0, (int) level.height)), 0.0, player));
+				level.addEntity(new Bat01(level, position, 0.0, player));
 				break;
 		}
 	}

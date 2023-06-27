@@ -54,7 +54,7 @@ public class Player extends NPC {
 		
 		long currentTick = System.currentTimeMillis();
 		
-		if (!isDeath) {
+		if (!isDeath && level.isRunning) {
 			isWalking = false;
 			isRunning = false;
 			isFlipped = false;
@@ -160,7 +160,7 @@ public class Player extends NPC {
 				isWalking = true;
 			}
 			
-			move();
+			move(delta);
 		}
 		
 		handleAnimation();
@@ -212,7 +212,7 @@ public class Player extends NPC {
 			playerLevel += 1;
 			exp = 0;
 			
-			new TextEntity(level, "Level Up!", new Vector2D(position.x + Utils.randomInteger(-5, 5), position.y + Utils.randomInteger(-5, 5)), new Color(0.4, 1.0, 0.4, 1.0), 5.0);
+			new TextEntity(level, "Level Up!", new Vector2D(position.x + Utils.randomInteger(-5, 5), position.y + Utils.randomInteger(-5, 5)), new Color(0.4, 1.0, 0.4, 1.0), 1.0);
 			SoundManager.playSound(SoundCache.getSound(Resources.EFFECT_LEVEL_UP), InternalSettings.VOLUME_LEVEL_UP, false);
 		}
 	}
@@ -234,7 +234,7 @@ public class Player extends NPC {
 				double damageValue = damage - armor;
 				life -= damageValue;
 				
-				new TextEntity(level, String.valueOf((int) damageValue), new Vector2D(position.x + Utils.randomInteger(-5, 5), position.y + Utils.randomInteger(-5, 5)), new Color(1.0, 0.4, 0.4, 1.0), 5.0);
+				new TextEntity(level, String.valueOf((int) damageValue), new Vector2D(position.x + Utils.randomInteger(-5, 5), position.y + Utils.randomInteger(-5, 5)), new Color(1.0, 0.4, 0.4, 1.0), 2.0);
 			}
 		}
 	}

@@ -1,5 +1,6 @@
 package com.toxicfrog.game;
 
+import com.toxicfrog.balancing.CoreBalance;
 import com.toxicfrog.enums.ENUMS.CHARACTER;
 import com.toxicfrog.enums.ENUMS.GAMESTATE;
 import com.toxicfrog.enums.ENUMS.WEAPON;
@@ -16,16 +17,13 @@ public class Game {
 	public Game(CHARACTER character, WEAPON weapon) {
 		Log.print("New game started. Character: " + character.toString() + ", Weapon: " + weapon.toString());
 		
-		level = new Level(4096, 4096, character, weapon, 1000*60*10);
+		level = new Level(4096, 4096, character, weapon, 1000*60*CoreBalance.GAME_ROUND_LENGTH);
 		renderer = new Renderer();
 	}
 	
 	public void update(GameScene scene, double delta) {
 		if (level != null) {
 			if (scene.state.equals(GAMESTATE.INGAME)) {
-				//scene.gameView.canvas.setWidth(level.width);
-				//scene.gameView.canvas.setHeight(level.height);
-				
 				level.update(scene, delta);
 			}
 		}
@@ -41,7 +39,7 @@ public class Game {
 
 	public void stop() {
 		if (level != null) {
-			level.stop();
+			level.destroy();
 		}
 		
 		if (renderer != null) {

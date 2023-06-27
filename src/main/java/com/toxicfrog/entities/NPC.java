@@ -8,6 +8,8 @@ import com.toxicfrog.input.Input;
 import com.toxicfrog.level.Level;
 import com.toxicfrog.utils.Vector2D;
 
+import javafx.animation.Interpolator;
+
 public class NPC extends Entity {
 	
 	public double maxLife = 100;
@@ -30,15 +32,16 @@ public class NPC extends Entity {
 		
 	}
 	
-	public void move() {
+	public void move(double delta) {
 		velocity.clear();
 		
 		if (movement.x != 0 || movement.y != 0) {
 			double mag = Math.sqrt(movement.x * movement.x + movement.y * movement.y);
 			velocity.x = (movement.x / mag) * speed;
 			velocity.y = (movement.y / mag) * speed;
-			
-			position.add(velocity);
+
+			position.x = Interpolator.LINEAR.interpolate(position.x, position.x + velocity.x, 1.0 / delta);
+			position.y = Interpolator.LINEAR.interpolate(position.y, position.y + velocity.y, 1.0 / delta);
 		}
 	}
 	

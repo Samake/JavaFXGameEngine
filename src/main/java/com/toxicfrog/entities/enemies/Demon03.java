@@ -1,24 +1,26 @@
 package com.toxicfrog.entities.enemies;
 
+import com.toxicfrog.balancing.CoreBalance;
 import com.toxicfrog.camera.Camera;
 import com.toxicfrog.entities.characters.Player;
 import com.toxicfrog.input.Input;
 import com.toxicfrog.level.Level;
+import com.toxicfrog.utils.Utils;
 import com.toxicfrog.utils.Vector2D;
 
 public class Demon03 extends Enemy {
 
 	public Demon03(Level level, Vector2D position, double rotation, Player player) {
-		super(level, "enemies/enemy_02", position, rotation, 0.65, 1.8, player);
+		super(level, "enemies/enemy_02", position, rotation, CoreBalance.DEMON_03_SCALE, Utils.randomDouble(CoreBalance.DEMON_03_SPEED - 0.25, CoreBalance.DEMON_03_SPEED + 0.25), player);
 		
 		boundingBox.widthScale = 0.2;
 		boundingBox.heightScale = 0.3;
 		boundingBox.yOffset = height * 0.225;
 		
 		difficult = 3;
-		maxLife = 100;
+		maxLife = CoreBalance.DEMON_03_LIFE;
 		life = maxLife;
-		damage = 12;
+		damage = CoreBalance.DEMON_03_DAMAGE;
 	}
 
 	@Override

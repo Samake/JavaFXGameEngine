@@ -1,5 +1,6 @@
 package com.toxicfrog.entities.weapons;
 
+import com.toxicfrog.balancing.CoreBalance;
 import com.toxicfrog.cache.Resources;
 import com.toxicfrog.cache.SoundCache;
 import com.toxicfrog.camera.Camera;
@@ -20,7 +21,7 @@ public class Rifle extends Weapon {
 		boundingBox.heightScale = 0.35;
 		boundingBox.yOffset = height * 0.05;
 		
-		damage = 55;
+		damage = CoreBalance.WEAPON_DAMAGE_RIFLE;
 	}
 	
 	@Override
@@ -37,7 +38,7 @@ public class Rifle extends Weapon {
 	private void shot(Input input) {
 		SoundManager.playSound(SoundCache.getSound(Resources.EFFECT_RIFLE_SHOT), InternalSettings.VOLUME_RIFLE_SHOT, false);
 
-		new RifleShot(level, new Vector2D(position.x, position.y), new Vector2D(input.mouseWorldPosition.x, input.mouseWorldPosition.y), player, this);
+		new RifleShot(level, new Vector2D(position.x, position.y), new Vector2D(input.mouseWorldPosition.x, input.mouseWorldPosition.y), player, this, damage);
 	}
 
 	@Override

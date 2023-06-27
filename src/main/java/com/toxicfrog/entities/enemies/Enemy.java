@@ -122,7 +122,7 @@ public class Enemy extends NPC {
 					}
 				}
 				
-				move();
+				move(delta);
 				
 				if (targetPosition.x - 2 < position.x) {
 					isFlipped = true;
@@ -193,7 +193,7 @@ public class Enemy extends NPC {
 			double damageValue = damage - armor;
 			life -= damageValue;
 			
-			new TextEntity(level, String.valueOf((int) damageValue), new Vector2D(position.x + Utils.randomInteger(-5, 5), position.y + Utils.randomInteger(-5, 5)), new Color(1.0, 1.0, 1.0, 1.0), 5.0f);
+			new TextEntity(level, String.valueOf((int) damageValue), new Vector2D(position.x + Utils.randomInteger(-5, 5), position.y + Utils.randomInteger(-5, 5)), new Color(1.0, 1.0, 1.0, 1.0), 1.0f);
 		
 			if (projVelo != null) {
 				position.x += projVelo.x * 0.2;
