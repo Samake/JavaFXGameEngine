@@ -7,6 +7,7 @@ import com.toxicfrog.entities.NPC;
 import com.toxicfrog.entities.text.TextEntity;
 import com.toxicfrog.enums.ENUMS.ANIMATION;
 import com.toxicfrog.enums.ENUMS.ENTITYTYPE;
+import com.toxicfrog.enums.ENUMS.SOUNDTYPE;
 import com.toxicfrog.input.Input;
 import com.toxicfrog.level.Level;
 import com.toxicfrog.settings.InternalSettings;
@@ -213,7 +214,7 @@ public class Player extends NPC {
 			exp = 0;
 			
 			new TextEntity(level, "Level Up!", new Vector2D(position.x + Utils.randomInteger(-5, 5), position.y + Utils.randomInteger(-5, 5)), new Color(0.4, 1.0, 0.4, 1.0), 1.0);
-			SoundManager.playSound(SoundCache.getSound(Resources.EFFECT_LEVEL_UP), InternalSettings.VOLUME_LEVEL_UP, false);
+			SoundManager.playSound(SoundCache.getSound(Resources.EFFECT_LEVEL_UP), InternalSettings.VOLUME_LEVEL_UP, false, SOUNDTYPE.SOUND);
 		}
 	}
 	

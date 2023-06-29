@@ -4,6 +4,7 @@ import com.toxicfrog.cache.Resources;
 import com.toxicfrog.cache.SoundCache;
 import com.toxicfrog.camera.Camera;
 import com.toxicfrog.entities.characters.Player;
+import com.toxicfrog.enums.ENUMS.SOUNDTYPE;
 import com.toxicfrog.input.Input;
 import com.toxicfrog.level.Level;
 import com.toxicfrog.logging.Log;
@@ -74,7 +75,7 @@ public class XPGem extends Item {
 		super.collect();
 
 		player.addExp(amount);
-		SoundManager.playSound(SoundCache.getSound(Resources.EFFECT_COLLECT_GEM), InternalSettings.VOLUME_COLLECT_GEM, false);
+		SoundManager.playSound(SoundCache.getSound(Resources.EFFECT_COLLECT_GEM), InternalSettings.VOLUME_COLLECT_GEM, false, SOUNDTYPE.SOUND);
 		
 		isCollected = true;
 		

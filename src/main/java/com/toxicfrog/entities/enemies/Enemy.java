@@ -10,6 +10,7 @@ import com.toxicfrog.entities.effects.Puff01;
 import com.toxicfrog.entities.text.TextEntity;
 import com.toxicfrog.enums.ENUMS.ANIMATION;
 import com.toxicfrog.enums.ENUMS.ENTITYTYPE;
+import com.toxicfrog.enums.ENUMS.SOUNDTYPE;
 import com.toxicfrog.input.Input;
 import com.toxicfrog.level.Level;
 import com.toxicfrog.loot.LootManager;
@@ -212,7 +213,7 @@ public class Enemy extends NPC {
 			new Puff01(level, new Vector2D(position.x, position.y), width);
 			
 			LootManager.generateLoot(level, player, new Vector2D(position.x, position.y), difficult);
-			SoundManager.playSound(SoundCache.getSound(Resources.EFFECT_ENEMY_DEATH), InternalSettings.VOLUME_ENEMY_DEATH, false);
+			SoundManager.playSound(SoundCache.getSound(Resources.EFFECT_ENEMY_DEATH), InternalSettings.VOLUME_ENEMY_DEATH, false, SOUNDTYPE.SOUND);
 			
 			level.statistic.killCount += 1;
 		}

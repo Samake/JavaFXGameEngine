@@ -1,5 +1,9 @@
 package com.toxicfrog.sound;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.toxicfrog.enums.ENUMS.SOUNDTYPE;
 import com.toxicfrog.logging.Log;
 import com.toxicfrog.settings.Settings;
 
@@ -8,14 +12,13 @@ import javafx.scene.media.MediaPlayer;
 
 public class SoundManager {
 	
-	public static int soundCount = 0;
+	public static List<SoundPlayer> sounds = new ArrayList<SoundPlayer>();
 
-	public static MediaPlayer playSound(Media media, double volume, boolean infinite) {
+	public static MediaPlayer playSound(Media media, double volume, boolean infinite, SOUNDTYPE type) {
 		
-		if (soundCount < Settings.MAXSOUNDS) {
-			final MediaPlayer player = new MediaPlayer(media);
-			player.setVolume(volume * Settings.MASTERVOLUME);
-			
+		if (sounds.size() < Settings.MAXSOUNDS) {
+			MediaPlayer player = new MediaPlayer(media);
+
 			if (infinite) {
 				player.setCycleCount(99999);
 			} else {
@@ -24,18 +27,9 @@ public class SoundManager {
 			
 			player.play();
 			
-			soundCount++;
-			
 			player.setOnEndOfMedia(() -> {
 				if (player.getCycleCount() <= 1) {
-					player.stop();
-					player.dispose();
-					
-					soundCount--;
-					
-					if (soundCount <= 0) {
-						soundCount = 0;
-					}
+					removePlayer(player);
 				}
 			});
 			
@@ -43,9 +37,47 @@ public class SoundManager {
 				Log.print("Play sound " + media);
 			}
 			
+			sounds.add(new SoundPlayer(player, volume, type));
+			
 			return player;
 		}
 
 		return null;
+	}
+	
+	public static void removePlayer(MediaPlayer player) {
+		List<SoundPlayer> soundsUpdate = new ArrayList<SoundPlayer>(sounds);
+		
+		for (SoundPlayer soundPlayer : soundsUpdate) {
+			if (soundPlayer != null) {
+				if (soundPlayer.player.equals(player)) {
+					soundPlayer.destroy();
+					sounds.remove(soundPlayer);
+					soundPlayer = null;
+				}
+			}
+		}
+	}
+
+	public static void updateVolume() {
+		List<SoundPlayer> soundsUpdate = new ArrayList<SoundPlayer>(sounds);
+		
+		for (SoundPlayer player : soundsUpdate) {
+			if (player != null) {
+				player.updateVolume();
+			}
+		}
+	}
+	
+	public static void destroy() {
+		List<SoundPlayer> soundsUpdate = new ArrayList<SoundPlayer>(sounds);
+		
+		for (SoundPlayer soundPlayer : soundsUpdate) {
+			if (soundPlayer != null) {
+				soundPlayer.destroy();
+				sounds.remove(soundPlayer);
+				soundPlayer = null;
+			}
+		}
 	}
 }

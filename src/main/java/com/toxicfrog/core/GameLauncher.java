@@ -10,6 +10,7 @@ import com.toxicfrog.logging.Log;
 import com.toxicfrog.loot.LootManager;
 import com.toxicfrog.settings.InternalSettings;
 import com.toxicfrog.settings.Settings;
+import com.toxicfrog.sound.SoundManager;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
@@ -150,7 +151,12 @@ public class GameLauncher extends Application {
     }
 
     public static void exitGame() {
+    	scene.destroy();
+    	SoundManager.destroy();
+    	
     	Log.print(title + " was closed!");
+    	
         Platform.exit();
+        System.exit(0);
     }
 }

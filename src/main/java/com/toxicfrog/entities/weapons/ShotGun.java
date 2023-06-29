@@ -6,6 +6,7 @@ import com.toxicfrog.cache.SoundCache;
 import com.toxicfrog.camera.Camera;
 import com.toxicfrog.entities.characters.Player;
 import com.toxicfrog.entities.projectiles.ShotGunShot;
+import com.toxicfrog.enums.ENUMS.SOUNDTYPE;
 import com.toxicfrog.input.Input;
 import com.toxicfrog.level.Level;
 import com.toxicfrog.settings.InternalSettings;
@@ -31,21 +32,18 @@ public class ShotGun extends Weapon {
 		if (player != null && !player.isDeath) {
 			if (input.isLeftMouseClicked()) {
 				shot(input);
-				SoundManager.playSound(SoundCache.getSound(Resources.EFFECT_SHOTGUN_SHOT), InternalSettings.VOLUME_SHOTGUN_SHOT, false);
-				
-				new ShotGunShot(level, new Vector2D(position.x, position.y), new Vector2D(input.mousePosition.x + 35, input.mousePosition.y - 35), player, this, damage);
-				new ShotGunShot(level, new Vector2D(position.x, position.y), new Vector2D(input.mousePosition.x + 15, input.mousePosition.y - 15), player, this, damage);
-				new ShotGunShot(level, new Vector2D(position.x, position.y), new Vector2D(input.mousePosition.x, input.mousePosition.y), player, this, damage);
-				new ShotGunShot(level, new Vector2D(position.x, position.y), new Vector2D(input.mousePosition.x - 15, input.mousePosition.y + 15), player, this, damage);
-				new ShotGunShot(level, new Vector2D(position.x, position.y), new Vector2D(input.mousePosition.x - 35, input.mousePosition.y + 35), player, this, damage);
 			}
 		}
 	}
 	
 	private void shot(Input input) {
-		SoundManager.playSound(SoundCache.getSound(Resources.EFFECT_SHOTGUN_SHOT), InternalSettings.VOLUME_SHOTGUN_SHOT, false);
+		SoundManager.playSound(SoundCache.getSound(Resources.EFFECT_SHOTGUN_SHOT), InternalSettings.VOLUME_SHOTGUN_SHOT, false, SOUNDTYPE.SOUND);
 		
-		new ShotGunShot(level, new Vector2D(position.x, position.y), new Vector2D(input.mouseWorldPosition.x, input.mouseWorldPosition.y), player, this, damage);
+		new ShotGunShot(level, new Vector2D(position.x, position.y), new Vector2D(input.mousePosition.x + 35, input.mousePosition.y - 35), player, this, damage);
+		new ShotGunShot(level, new Vector2D(position.x, position.y), new Vector2D(input.mousePosition.x + 15, input.mousePosition.y - 15), player, this, damage);
+		new ShotGunShot(level, new Vector2D(position.x, position.y), new Vector2D(input.mousePosition.x, input.mousePosition.y), player, this, damage);
+		new ShotGunShot(level, new Vector2D(position.x, position.y), new Vector2D(input.mousePosition.x - 15, input.mousePosition.y + 15), player, this, damage);
+		new ShotGunShot(level, new Vector2D(position.x, position.y), new Vector2D(input.mousePosition.x - 35, input.mousePosition.y + 35), player, this, damage);
 	}
 	
 	@Override

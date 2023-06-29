@@ -155,7 +155,7 @@ public class DebugGUI extends Popup {
 				}
 
 				if (sounds != null) {
-					sounds.setText(String.valueOf(SoundManager.soundCount));
+					sounds.setText(String.valueOf(SoundManager.sounds.size()));
 				}
 				
 				if (dangerLevel != null) {

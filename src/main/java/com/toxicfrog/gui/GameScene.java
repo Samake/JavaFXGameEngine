@@ -5,6 +5,7 @@ import com.toxicfrog.cache.SoundCache;
 import com.toxicfrog.camera.Camera;
 import com.toxicfrog.core.GameLauncher;
 import com.toxicfrog.enums.ENUMS.GAMESTATE;
+import com.toxicfrog.enums.ENUMS.SOUNDTYPE;
 import com.toxicfrog.game.Game;
 import com.toxicfrog.gui.debug.DebugGUI;
 import com.toxicfrog.gui.panes.GameGUI;
@@ -43,7 +44,6 @@ public class GameScene extends Scene {
 	public Camera camera;
 	
 	private MediaPlayer menuSound;
-	private MediaPlayer ingameSound;
 
 	public GameScene(double width, double height) {
 		super(new SplashScreen(), width, height);
@@ -77,10 +77,7 @@ public class GameScene extends Scene {
 	}
 	
 	private void initSound() {
-		menuSound = SoundManager.playSound(SoundCache.getSound(Resources.MUSIC_02), InternalSettings.VOLUME_MUSIC * Settings.MUSICVOLUME, true);
-		menuSound.stop();
-        ingameSound = SoundManager.playSound(SoundCache.getSound(Resources.MUSIC_01), InternalSettings.VOLUME_MUSIC * Settings.MUSICVOLUME, true);
-        ingameSound.stop();
+		menuSound = SoundManager.playSound(SoundCache.getSound(Resources.MUSIC_02), InternalSettings.VOLUME_MUSIC * Settings.MUSICVOLUME, true, SOUNDTYPE.MUSIC);
 	}
 	
 	public void update(Game game, double delta) {
@@ -101,12 +98,6 @@ public class GameScene extends Scene {
 				if (menuSound != null) {
 					if (!menuSound.getStatus().equals(Status.PLAYING)) {
 						menuSound.play();
-					}
-				}
-				
-				if (ingameSound != null) {
-					if (ingameSound.getStatus().equals(Status.PLAYING)) {
-						ingameSound.pause();
 					}
 				}
 				
@@ -146,12 +137,6 @@ public class GameScene extends Scene {
 				if (menuSound != null) {
 					if (menuSound.getStatus().equals(Status.PLAYING)) {
 						menuSound.pause();
-					}
-				}
-				
-				if (ingameSound != null) {
-					if (!ingameSound.getStatus().equals(Status.PLAYING)) {
-						ingameSound.play();
 					}
 				}
 			}
@@ -220,6 +205,13 @@ public class GameScene extends Scene {
 				break;
 		default:
 			break;
+		}
+	}
+
+	public void destroy() {
+		if (menuSound != null) {
+			SoundManager.removePlayer(menuSound);
+			menuSound = null;
 		}
 	}
 }

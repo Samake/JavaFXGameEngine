@@ -2,6 +2,10 @@ package com.toxicfrog.enums;
 
 public class ENUMS {
 
+	public enum SOUNDTYPE {
+		MUSIC, SOUND
+	}
+	
 	public enum GAMESTATE {
 		LOADING, MAIN, SETTINGS, STARTGAME, INGAME, PAUSED, ENDGAME, SHOP, TASKS, UNLOCKS
 	}

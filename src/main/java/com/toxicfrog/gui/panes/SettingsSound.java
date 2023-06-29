@@ -2,6 +2,7 @@ package com.toxicfrog.gui.panes;
 
 import com.toxicfrog.logging.Log;
 import com.toxicfrog.settings.Settings;
+import com.toxicfrog.sound.SoundManager;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -117,6 +118,7 @@ public class SettingsSound extends Tab {
 			@Override
 			public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
 				Settings.MASTERVOLUME = newValue.doubleValue();
+				SoundManager.updateVolume();
 			}
         });
 
@@ -159,7 +161,8 @@ public class SettingsSound extends Tab {
         slider.valueProperty().addListener(new ChangeListener<>() {
 			@Override
 			public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
-				Settings.MASTERVOLUME = newValue.doubleValue();
+				Settings.MUSICVOLUME = newValue.doubleValue();
+				SoundManager.updateVolume();
 			}
         });
 

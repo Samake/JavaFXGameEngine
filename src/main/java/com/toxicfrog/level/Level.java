@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import com.toxicfrog.cache.Resources;
+import com.toxicfrog.cache.SoundCache;
 import com.toxicfrog.camera.Camera;
 import com.toxicfrog.core.GameLauncher;
 import com.toxicfrog.entities.Entity;
@@ -25,6 +27,8 @@ import com.toxicfrog.entities.weapons.Wand;
 import com.toxicfrog.entities.weapons.Weapon;
 import com.toxicfrog.enums.ENUMS.CHARACTER;
 import com.toxicfrog.enums.ENUMS.ENTITYTYPE;
+import com.toxicfrog.enums.ENUMS.GAMESTATE;
+import com.toxicfrog.enums.ENUMS.SOUNDTYPE;
 import com.toxicfrog.enums.ENUMS.WEAPON;
 import com.toxicfrog.gui.GameScene;
 import com.toxicfrog.logging.Log;
@@ -32,10 +36,13 @@ import com.toxicfrog.loot.LootManager;
 import com.toxicfrog.settings.InternalSettings;
 import com.toxicfrog.settings.Path;
 import com.toxicfrog.settings.Settings;
+import com.toxicfrog.sound.SoundManager;
 import com.toxicfrog.utils.Utils;
 import com.toxicfrog.utils.Vector2D;
 
 import javafx.scene.image.Image;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaPlayer.Status;
 
 public class Level {
 
@@ -65,10 +72,15 @@ public class Level {
 	
 	private long lastTick = System.currentTimeMillis();
 	
+	private MediaPlayer ingameSound;
+	
 	public Level(int width, int height, CHARACTER character, WEAPON weapon, long duration) {
 		this.width = width;
 		this.height = height;
 		this.duration = duration;
+		
+		ingameSound = SoundManager.playSound(SoundCache.getSound(Resources.MUSIC_01), InternalSettings.VOLUME_MUSIC * Settings.MUSICVOLUME, true, SOUNDTYPE.MUSIC);
+		ingameSound.stop();
 		
 		start(width, height, character, weapon, duration);
 		
@@ -161,6 +173,8 @@ public class Level {
 	}
 
 	public void update(GameScene scene, double delta) {
+		handleLevelMusic(scene);
+		
 		renderList.clear();
 		updatedEntities.clear();
 		updatedTextEntities.clear();;
@@ -259,6 +273,24 @@ public class Level {
 		LootManager.update(this, player, delta);
     }
 	
+	public void pause(GameScene scene) {
+		handleLevelMusic(scene);
+	}
+
+	private void handleLevelMusic(GameScene scene) {
+		if (ingameSound != null) {
+			if (scene.state.equals(GAMESTATE.INGAME)) {
+				if (!ingameSound.getStatus().equals(Status.PLAYING)) {
+					ingameSound.play();
+				}
+			} else {
+				if (ingameSound.getStatus().equals(Status.PLAYING)) {
+					ingameSound.pause();
+				}
+			}
+		}
+	}
+	
 	private boolean checkIfInScene(Entity entity, Camera camera) {
 		if (entity != null && camera != null) {
 			
@@ -352,6 +384,11 @@ public class Level {
 		
 		renderList.clear();
 		entities.clear();
+		
+		if (ingameSound != null) {
+			SoundManager.removePlayer(ingameSound);
+			ingameSound = null;
+		}
 		
 		Log.print("Level were stopped.");
 	}

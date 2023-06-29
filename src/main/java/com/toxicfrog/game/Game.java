@@ -27,6 +27,8 @@ public class Game {
 		if (level != null) {
 			if (scene.state.equals(GAMESTATE.INGAME)) {
 				level.update(scene, delta);
+			} else {
+				level.pause(scene);
 			}
 		}
     }

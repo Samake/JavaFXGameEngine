@@ -6,6 +6,7 @@ import com.toxicfrog.cache.SoundCache;
 import com.toxicfrog.camera.Camera;
 import com.toxicfrog.entities.characters.Player;
 import com.toxicfrog.entities.projectiles.RifleShot;
+import com.toxicfrog.enums.ENUMS.SOUNDTYPE;
 import com.toxicfrog.input.Input;
 import com.toxicfrog.level.Level;
 import com.toxicfrog.settings.InternalSettings;
@@ -36,7 +37,7 @@ public class Rifle extends Weapon {
 	}
 	
 	private void shot(Input input) {
-		SoundManager.playSound(SoundCache.getSound(Resources.EFFECT_RIFLE_SHOT), InternalSettings.VOLUME_RIFLE_SHOT, false);
+		SoundManager.playSound(SoundCache.getSound(Resources.EFFECT_RIFLE_SHOT), InternalSettings.VOLUME_RIFLE_SHOT, false, SOUNDTYPE.SOUND);
 
 		new RifleShot(level, new Vector2D(position.x, position.y), new Vector2D(input.mouseWorldPosition.x, input.mouseWorldPosition.y), player, this, damage);
 	}
