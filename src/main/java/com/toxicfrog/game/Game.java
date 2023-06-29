@@ -17,7 +17,9 @@ public class Game {
 	public Game(CHARACTER character, WEAPON weapon) {
 		Log.print("New game started. Character: " + character.toString() + ", Weapon: " + weapon.toString());
 		
-		level = new Level(4096, 4096, character, weapon, 1000*60*CoreBalance.GAME_ROUND_LENGTH);
+		long duration = (long) (1000*60*CoreBalance.GAME_ROUND_LENGTH);
+		
+		level = new Level(4096, 4096, character, weapon, duration);
 		renderer = new Renderer();
 	}
 	

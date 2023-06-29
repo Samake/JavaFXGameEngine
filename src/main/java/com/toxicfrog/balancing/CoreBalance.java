@@ -5,7 +5,7 @@ import com.toxicfrog.settings.Settings;
 public class CoreBalance {
 
 	/* GAMEPLAY */
-	final public static int GAME_ROUND_LENGTH = 10;
+	final public static double GAME_ROUND_LENGTH = 10.0;
 	
 	final public static double NPC_ANIMATION_DEFAULT = 200;
 	final public static double NPC_MIN_SPAWN_DISTANCE = Settings.WINDOW_WIDTH / 1.5;

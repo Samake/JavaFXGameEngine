@@ -6,23 +6,26 @@ import com.toxicfrog.logging.Log;
 import com.toxicfrog.settings.Settings;
 
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
+import javafx.scene.control.TabPane;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
-import javafx.scene.layout.VBox;
 
-public class SettingsMenu extends VBox {
+public class SettingsMenu extends TabPane {
 	
 	public SettingsMenu() {
-		setAlignment(Pos.CENTER);
 		setPadding(new Insets(10));
-		setSpacing(10);
+		
+		getStyleClass().add("settings-pane");
+		setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
+		setTabMinWidth(Settings.WINDOW_WIDTH / 4.5);
 		
 	    addBackGroundImage();
+	
+        getTabs().addAll(new SettingsMain("Allgemein"), new SettingsGraphics("Grafik"), new SettingsSound("Sound"), new SettingsBindings("Steuerung"));
 
 	    Log.print("SettingsMenu were initialized!");
 	}
