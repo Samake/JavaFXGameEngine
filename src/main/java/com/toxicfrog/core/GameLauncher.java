@@ -122,7 +122,7 @@ public class GameLauncher extends Application {
     
     public static void startGameWithSettings(CHARACTER character, WEAPON weapon) {
     	if (game == null) {
-    		game = new Game(character, weapon);
+    		game = new Game(character, weapon, scene);
     		scene.setState(GAMESTATE.INGAME);
     	}
     }

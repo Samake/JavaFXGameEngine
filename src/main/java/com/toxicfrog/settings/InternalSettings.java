@@ -3,7 +3,7 @@ package com.toxicfrog.settings;
 public class InternalSettings {
 
 	final public static String TITLE = "JavaFX TestGame";
-	final public static String VERSION = "v.0.6.0.0";
+	final public static String VERSION = "v.0.6.0.2";
 	
 	final public static float WINDOW_ZOOM = (1.0f / 1080) * Settings.WINDOW_HEIGHT;
 	final public static int DEFAULT_TEXTURE_SIZE = 512;

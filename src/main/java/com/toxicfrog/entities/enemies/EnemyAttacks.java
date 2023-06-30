@@ -13,14 +13,14 @@ public class EnemyAttacks {
 	}
 	
 	public static void ringShot(Level level, Vector2D position, double xOffset, double yOffset, double speed, double distance, Player player, Enemy enemy) {
-		EnemyAttacks.shot(level, position, 0, yOffset, 0, speed, distance, player, enemy);
-		EnemyAttacks.shot(level, position, 0, yOffset, 45, speed, distance, player, enemy);
-		EnemyAttacks.shot(level, position, 0, yOffset, 90, speed, distance, player, enemy);
-		EnemyAttacks.shot(level, position, 0, yOffset, 135, speed, distance, player, enemy);
-		EnemyAttacks.shot(level, position, 0, yOffset, 180, speed, distance, player, enemy);
-		EnemyAttacks.shot(level, position, 0, yOffset, 225, speed, distance, player, enemy);
-		EnemyAttacks.shot(level, position, 0, yOffset, 270, speed, distance, player, enemy);
-		EnemyAttacks.shot(level, position, 0, yOffset, 315, speed, distance, player, enemy);
+		shot(level, position, 0, yOffset, 0, speed, distance, player, enemy);
+		shot(level, position, 0, yOffset, 45, speed, distance, player, enemy);
+		shot(level, position, 0, yOffset, 90, speed, distance, player, enemy);
+		shot(level, position, 0, yOffset, 135, speed, distance, player, enemy);
+		shot(level, position, 0, yOffset, 180, speed, distance, player, enemy);
+		shot(level, position, 0, yOffset, 225, speed, distance, player, enemy);
+		shot(level, position, 0, yOffset, 270, speed, distance, player, enemy);
+		shot(level, position, 0, yOffset, 315, speed, distance, player, enemy);
 	}
 	
 	public static void tripleRingShot(Level level, Vector2D position, double xOffset, double yOffset, double speed, double distance, Player player, Enemy enemy) {

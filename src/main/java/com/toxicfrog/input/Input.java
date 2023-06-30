@@ -83,6 +83,7 @@ public class Input {
 	public boolean isKeyClicked(KeyCode keyCode) {
 		if (releasedKeys.contains(keyCode)) {
 			releasedKeys.remove(keyCode);
+			
 			return true;
 		}
 		

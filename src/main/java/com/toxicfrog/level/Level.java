@@ -46,6 +46,8 @@ import javafx.scene.media.MediaPlayer.Status;
 
 public class Level {
 
+	private GameScene gameScene;
+	
 	public int width;
 	public int height;
 	public long duration;
@@ -74,10 +76,11 @@ public class Level {
 	
 	private MediaPlayer ingameSound;
 	
-	public Level(int width, int height, CHARACTER character, WEAPON weapon, long duration) {
+	public Level(int width, int height, CHARACTER character, WEAPON weapon, long duration, GameScene gameScene) {
 		this.width = width;
 		this.height = height;
 		this.duration = duration;
+		this.gameScene = gameScene;
 		
 		ingameSound = SoundManager.playSound(SoundCache.getSound(Resources.MUSIC_01), InternalSettings.VOLUME_MUSIC * Settings.MUSICVOLUME, true, SOUNDTYPE.MUSIC);
 		ingameSound.stop();
@@ -172,114 +175,116 @@ public class Level {
 		}
 	}
 
-	public void update(GameScene scene, double delta) {
-		handleLevelMusic(scene);
-		
-		renderList.clear();
-		updatedEntities.clear();
-		updatedTextEntities.clear();;
-		renderListText.clear();;
-		
-		collidingEntities.clear();
-		
-		updatedEntities.addAll(entities);
-		updatedTextEntities.addAll(textEntities);
+	public void update(double delta) {
+		if (gameScene != null) {
+			handleLevelMusic();
+			
+			renderList.clear();
+			updatedEntities.clear();
+			updatedTextEntities.clear();;
+			renderListText.clear();;
+			
+			collidingEntities.clear();
+			
+			updatedEntities.addAll(entities);
+			updatedTextEntities.addAll(textEntities);
 
-		currentEmenyCount = 0;
-		
-		for (Entity entity : updatedEntities) {
-			if (entity != null) {
-				if (entity.type.equals(ENTITYTYPE.ENEMY)) {
-					collidingEntities.add(entity);
-					currentEmenyCount += 1;
-				}
-
-				if (entity.type.equals(ENTITYTYPE.OBJECT)) {
-					Object entityObject = (Object) entity;
-					
-					if (entityObject.hasCollission) {
+			currentEmenyCount = 0;
+			
+			for (Entity entity : updatedEntities) {
+				if (entity != null) {
+					if (entity.type.equals(ENTITYTYPE.ENEMY)) {
 						collidingEntities.add(entity);
+						currentEmenyCount += 1;
+					}
+
+					if (entity.type.equals(ENTITYTYPE.OBJECT)) {
+						Object entityObject = (Object) entity;
+						
+						if (entityObject.hasCollission) {
+							collidingEntities.add(entity);
+						}
 					}
 				}
 			}
-		}
-		
-		for (Entity entity : updatedEntities) {
-			if (entity != null) {
-				entity.update(scene.input, scene.camera, delta);
-				
-				if (checkIfInScene(entity, scene.camera)) {
-					renderList.add(entity);
-				};
-			}
-		}
-		
-		for (TextEntity entity : updatedTextEntities) {
-			if (entity != null) {
-				entity.update(scene.input, scene.camera, delta);
-				
-				if (checkIfInScene(entity, scene.camera)) {
-					renderListText.add(entity);
-				};
-			}
-		}
-
-		Collections.sort(renderList, new Comparator<Entity>() {
-	        @Override
-	        public int compare(Entity e1, Entity e2) {
-	        	if (e1.boundingBox.sortHeight > e2.boundingBox.sortHeight) {
-	        		return 1;
-	        	} else if (e1.boundingBox.sortHeight < e2.boundingBox.sortHeight) {
-	        		return -1;
-	        	} else {
-	        		return 0;
-	        	}
-	        }
-	    });
-		
-		Collections.sort(renderListText, new Comparator<TextEntity>() {
-	        @Override
-	        public int compare(TextEntity e1, TextEntity e2) {
-	        	if (e1.position.y > e2.position.y) {
-	        		return 1;
-	        	} else if (e1.position.y < e2.position.y) {
-	        		return -1;
-	        	} else {
-	        		return 0;
-	        	}
-	        }
-	    });
-		
-		if (player != null && !player.isDeath && isRunning) {
-			long currentTick = System.currentTimeMillis();
 			
-			if (lastTick + 1000 * delta <= currentTick) {
-				duration -= 1000 * delta;
-				lastTick = currentTick;
-				
-				if (duration <= 0) {
-					stop();
+			for (Entity entity : updatedEntities) {
+				if (entity != null) {
+					entity.update(gameScene.input, gameScene.camera, delta);
+					
+					if (checkIfInScene(entity, gameScene.camera)) {
+						renderList.add(entity);
+					};
 				}
 			}
 			
-			if (enemySpawner != null) {
-				enemySpawner.update();
-				dangerLevel = enemySpawner.dangerLevel;
+			for (TextEntity entity : updatedTextEntities) {
+				if (entity != null) {
+					entity.update(gameScene.input, gameScene.camera, delta);
+					
+					if (checkIfInScene(entity, gameScene.camera)) {
+						renderListText.add(entity);
+					};
+				}
 			}
-		} else {
-			stop();
+
+			Collections.sort(renderList, new Comparator<Entity>() {
+		        @Override
+		        public int compare(Entity e1, Entity e2) {
+		        	if (e1.boundingBox.sortHeight > e2.boundingBox.sortHeight) {
+		        		return 1;
+		        	} else if (e1.boundingBox.sortHeight < e2.boundingBox.sortHeight) {
+		        		return -1;
+		        	} else {
+		        		return 0;
+		        	}
+		        }
+		    });
+			
+			Collections.sort(renderListText, new Comparator<TextEntity>() {
+		        @Override
+		        public int compare(TextEntity e1, TextEntity e2) {
+		        	if (e1.position.y > e2.position.y) {
+		        		return 1;
+		        	} else if (e1.position.y < e2.position.y) {
+		        		return -1;
+		        	} else {
+		        		return 0;
+		        	}
+		        }
+		    });
+			
+			if (player != null && !player.isDeath && isRunning) {
+				long currentTick = System.currentTimeMillis();
+				
+				if (lastTick + 1000 * delta <= currentTick) {
+					duration -= 1000 * delta;
+					lastTick = currentTick;
+					
+					if (duration <= 0) {
+						stop();
+					}
+				}
+				
+				if (enemySpawner != null) {
+					enemySpawner.update();
+					dangerLevel = enemySpawner.dangerLevel;
+				}
+			} else {
+				stop();
+			}
+			
+			LootManager.update(this, player, delta);
 		}
-		
-		LootManager.update(this, player, delta);
     }
 	
-	public void pause(GameScene scene) {
-		handleLevelMusic(scene);
+	public void pause() {
+		handleLevelMusic();
 	}
 
-	private void handleLevelMusic(GameScene scene) {
+	private void handleLevelMusic() {
 		if (ingameSound != null) {
-			if (scene.state.equals(GAMESTATE.INGAME)) {
+			if (gameScene.state.equals(GAMESTATE.INGAME) || gameScene.state.equals(GAMESTATE.ENDGAME)) {
 				if (!ingameSound.getStatus().equals(Status.PLAYING)) {
 					ingameSound.play();
 				}
@@ -327,6 +332,8 @@ public class Level {
 		}
 		
 		isRunning = false;
+		
+		gameScene.setState(GAMESTATE.ENDGAME);
 	}
 
 	public void addEntity(Entity entity) {

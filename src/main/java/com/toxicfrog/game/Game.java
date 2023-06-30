@@ -13,29 +13,30 @@ public class Game {
 
 	public Level level;
 	public Renderer renderer;
-	
-	public Game(CHARACTER character, WEAPON weapon) {
+
+	public Game(CHARACTER character, WEAPON weapon, GameScene gameScene) {
+
 		Log.print("New game started. Character: " + character.toString() + ", Weapon: " + weapon.toString());
 		
 		long duration = (long) (1000*60*CoreBalance.GAME_ROUND_LENGTH);
 		
-		level = new Level(4096, 4096, character, weapon, duration);
+		level = new Level(4096, 4096, character, weapon, duration, gameScene);
 		renderer = new Renderer();
 	}
 	
 	public void update(GameScene scene, double delta) {
 		if (level != null) {
-			if (scene.state.equals(GAMESTATE.INGAME)) {
-				level.update(scene, delta);
+			if (scene.state.equals(GAMESTATE.INGAME) || scene.state.equals(GAMESTATE.ENDGAME)) {
+				level.update(delta);
 			} else {
-				level.pause(scene);
+				level.pause();
 			}
 		}
     }
 
 	public void render(GameScene scene) {
 		if (renderer != null && level != null && scene != null) {
-			if (scene.state.equals(GAMESTATE.INGAME)) {
+			if (scene.state.equals(GAMESTATE.INGAME) || scene.state.equals(GAMESTATE.ENDGAME)) {
 				renderer.render(scene.gameView.canvas, scene.camera, level);
 			}
 		}

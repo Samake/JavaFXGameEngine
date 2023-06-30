@@ -8,13 +8,18 @@ import com.toxicfrog.enums.ENUMS.GAMESTATE;
 import com.toxicfrog.enums.ENUMS.SOUNDTYPE;
 import com.toxicfrog.game.Game;
 import com.toxicfrog.gui.debug.DebugGUI;
+import com.toxicfrog.gui.panes.EndGameGUI;
 import com.toxicfrog.gui.panes.GameGUI;
 import com.toxicfrog.gui.panes.GameStartMenu;
 import com.toxicfrog.gui.panes.GameView;
 import com.toxicfrog.gui.panes.LoadingScreen;
 import com.toxicfrog.gui.panes.MainMenu;
+import com.toxicfrog.gui.panes.PauseGUI;
 import com.toxicfrog.gui.panes.SettingsMenu;
+import com.toxicfrog.gui.panes.ShopMenu;
 import com.toxicfrog.gui.panes.SplashScreen;
+import com.toxicfrog.gui.panes.TaskMenu;
+import com.toxicfrog.gui.panes.UnlockMenu;
 import com.toxicfrog.input.Input;
 import com.toxicfrog.logging.Log;
 import com.toxicfrog.settings.InternalSettings;
@@ -38,7 +43,12 @@ public class GameScene extends Scene {
 	public GameStartMenu gameStartMenu;
 	public SettingsMenu settingsMenu;
 	public GameView gameView;
+	public ShopMenu shopMenu;
+	public TaskMenu taskMenu;
+	public UnlockMenu unlockMenu;
 	public GameGUI gameGui;
+	public PauseGUI pauseGui;
+	public EndGameGUI endGameGui;
 	public DebugGUI debugGui;
 	
 	public Camera camera;
@@ -55,7 +65,12 @@ public class GameScene extends Scene {
 		gameStartMenu = new GameStartMenu(this);
 		settingsMenu = new SettingsMenu();
 		gameView = new GameView();
+		shopMenu = new ShopMenu();
+		taskMenu = new TaskMenu();
+		unlockMenu = new UnlockMenu();
 		gameGui = new GameGUI();
+		pauseGui = new PauseGUI(this);
+		endGameGui = new EndGameGUI(this); 
 		
 		debugGui = new DebugGUI();
 		
@@ -82,31 +97,7 @@ public class GameScene extends Scene {
 	
 	public void update(Game game, double delta) {
 		if (input != null) {
-			if (!state.equals(GAMESTATE.INGAME)) {
-				if (gameGui != null) {
-					if (gameGui.isShowing()) {
-						gameGui.hide();
-					}
-				}
-				
-				if (debugGui != null) {
-					if (debugGui.isShowing()) {
-						debugGui.hide();
-					}
-				}
-				
-				if (menuSound != null) {
-					if (!menuSound.getStatus().equals(Status.PLAYING)) {
-						menuSound.play();
-					}
-				}
-				
-				if (state.equals(GAMESTATE.STARTGAME)) {
-					if (gameStartMenu != null) {
-						gameStartMenu.update();
-					}
-				}
-			} else {
+			if (state.equals(GAMESTATE.INGAME)) {
 				if (input != null) {
 					input.update(camera);
 				}
@@ -139,6 +130,86 @@ public class GameScene extends Scene {
 						menuSound.pause();
 					}
 				}
+			} else {
+				if (gameGui != null) {
+					if (gameGui.isShowing()) {
+						gameGui.hide();
+					}
+				}
+				
+				if (debugGui != null) {
+					if (debugGui.isShowing()) {
+						debugGui.hide();
+					}
+				}
+				
+				if (menuSound != null) {
+					if (!menuSound.getStatus().equals(Status.PLAYING)) {
+						menuSound.play();
+					}
+				}
+			}
+			
+			if (state.equals(GAMESTATE.MAIN)) {
+				if (mainMenu != null) {
+					mainMenu.update(game);
+				}
+			}
+
+			if (state.equals(GAMESTATE.STARTGAME)) {
+				if (gameStartMenu != null) {
+					gameStartMenu.update();
+				}
+			}
+			
+			if (state.equals(GAMESTATE.PAUSED)) {
+				if (pauseGui != null) {
+					pauseGui.update(game, camera);
+					
+					if (!pauseGui.isShowing()) {
+						pauseGui.show(GameLauncher.primaryStage);
+					}
+				}
+			} else {
+				if (pauseGui != null) {
+					if (pauseGui.isShowing()) {
+						pauseGui.hide();
+					}
+				}
+			}
+			
+			if (state.equals(GAMESTATE.ENDGAME)) {
+				if (endGameGui != null) {
+					endGameGui.update(game, camera);
+					
+					if (!endGameGui.isShowing()) {
+						endGameGui.show(GameLauncher.primaryStage);
+					}
+				}
+			} else {
+				if (endGameGui != null) {
+					if (endGameGui.isShowing()) {
+						endGameGui.hide();
+					}
+				}
+			}
+			
+			if (state.equals(GAMESTATE.SHOP)) {
+				if (shopMenu != null) {
+					shopMenu.update();
+				}
+			}
+			
+			if (state.equals(GAMESTATE.TASKS)) {
+				if (taskMenu != null) {
+					taskMenu.update();
+				}
+			}
+			
+			if (state.equals(GAMESTATE.UNLOCKS)) {
+				if (unlockMenu != null) {
+					unlockMenu.update();
+				}
 			}
 			
 			if (input.isKeyClicked(KeyCode.ESCAPE)) {
@@ -151,6 +222,26 @@ public class GameScene extends Scene {
 				}
 				
 				if (state.equals(GAMESTATE.INGAME)) {
+					setState(GAMESTATE.PAUSED);
+				}
+				
+				if (state.equals(GAMESTATE.PAUSED)) {
+					//setState(GAMESTATE.MAIN);
+				}
+				
+				if (state.equals(GAMESTATE.ENDGAME)) {
+					//setState(GAMESTATE.MAIN);
+				}
+				
+				if (state.equals(GAMESTATE.SHOP)) {
+					setState(GAMESTATE.MAIN);
+				}
+				
+				if (state.equals(GAMESTATE.UNLOCKS)) {
+					setState(GAMESTATE.MAIN);
+				}
+				
+				if (state.equals(GAMESTATE.TASKS)) {
 					setState(GAMESTATE.MAIN);
 				}
 			}
@@ -159,52 +250,50 @@ public class GameScene extends Scene {
 				Settings.DEBUG_GUI = !Settings.DEBUG_GUI;
 			}
 		}
-		
-		if (mainMenu != null) {
-			mainMenu.update(game);
-		}
 	}
 
-	public void setState(GAMESTATE state) {
-		if (Settings.DEBUG_LOG) {
-			Log.print("GAMESTATE old:" +  this.state + ", new: " + state.toString());
-		}
+	public void setState(GAMESTATE newState) {
+		if (!newState.equals(state)) {
+			if (Settings.DEBUG_LOG) {
+				Log.print("GAMESTATE old:" +  this.state + ", new: " + state.toString());
+			}
 
-		this.state = state;
-		
-		switch(state) {
-			case LOADING:
-				setRoot(loadingScreen);
-				break;
-			case MAIN:
-				setRoot(mainMenu);
-				break;
-			case SETTINGS:
-				setRoot(settingsMenu);
-				break;
-			case STARTGAME:
-				setRoot(gameStartMenu);
-				break;
-			case INGAME:
-				setRoot(gameView);
-				break;
-			case PAUSED:
-				setRoot(null);
-				break;
-			case ENDGAME:
-				setRoot(null);
-				break;
-			case SHOP:
-				setRoot(null);
-				break;
-			case TASKS:
-				setRoot(null);
-				break;
-			case UNLOCKS:
-				setRoot(null);
-				break;
-		default:
-			break;
+			this.state = newState;
+			
+			switch(state) {
+				case LOADING:
+					setRoot(loadingScreen);
+					break;
+				case MAIN:
+					setRoot(mainMenu);
+					break;
+				case SETTINGS:
+					setRoot(settingsMenu);
+					break;
+				case STARTGAME:
+					setRoot(gameStartMenu);
+					break;
+				case INGAME:
+					setRoot(gameView);
+					break;
+				case PAUSED:
+					setRoot(gameView);
+					break;
+				case ENDGAME:
+					setRoot(gameView);
+					break;
+				case SHOP:
+					setRoot(shopMenu);
+					break;
+				case TASKS:
+					setRoot(taskMenu);
+					break;
+				case UNLOCKS:
+					setRoot(unlockMenu);
+					break;
+				default:
+					break;
+			}
 		}
 	}
 
