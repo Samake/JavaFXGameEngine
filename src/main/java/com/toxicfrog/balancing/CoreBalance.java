@@ -14,6 +14,13 @@ public class CoreBalance {
 	final public static int NPC_MAX_SPAWN_VALUE = 10;
 	final public static int NPC_SPAWN_TICKCOUNT = 3500;
 	
+	/* BASIC STATS */
+	final public static double CHARACTER_SPRINT_COSTS = 8.0;
+	final public static double CHARACTER_ROLL_COSTS = 10.0;
+	final public static double CHARACTER_LIFE_RECOVER = 0.0125;
+	final public static double CHARACTER_ENERGY_RECOVER = 0.2;
+	final public static double CHARACTER_MAGNIFY = 1.5;
+	
 	/* PLAYER */
 	final public static double CHARACTER_01_SCALE = 0.85;
 	final public static double CHARACTER_01_SPEED = 5.0;

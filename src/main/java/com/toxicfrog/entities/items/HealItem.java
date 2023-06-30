@@ -39,7 +39,7 @@ public class HealItem extends Item {
 		if (player != null) {
 			double distance = (int) Utils.computeDistanceOfTwoPoints((int) position.x, (int) position.y, (int) player.position.x, (int) player.position.y);
 			
-			if (distance <= (defaultCollectDistance - (defaultCollectDistance * player.magnify)) * InternalSettings.WINDOW_ZOOM) {
+			if (distance <= (defaultCollectDistance * player.magnify) * InternalSettings.WINDOW_ZOOM) {
 				if (!isCollected) {
 					defaultSpeed += 0.5 * delta;
 

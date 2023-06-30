@@ -13,7 +13,7 @@ public class EnemyProjectile extends Projectile {
 	private Player player;
 	private Enemy enemy;
 
-	public EnemyProjectile(Level level, String imagePath, Vector2D position, Vector2D targetPosition, double scale, double speed, int maxDistance, Player player, Enemy enemy) {
+	public EnemyProjectile(Level level, String imagePath, Vector2D position, Vector2D targetPosition, double scale, double speed, double maxDistance, Player player, Enemy enemy) {
 		super(level, imagePath, position, targetPosition, scale, speed, maxDistance);
 
 		this.player = player;
@@ -34,11 +34,17 @@ public class EnemyProjectile extends Projectile {
 		if (level != null && player != null && enemy != null && !enemy.isDeath) {
 			if (checkCollission(player, ENTITYTYPE.PLAYER)) {
 				player.hit((int) (enemy.damage * 0.5), null);
-				destroy();
+				delete();
 			}
 		} else {
 			destroy();
 		}
+	}
+	
+	@Override
+	public void delete() {
+		super.delete();
+
 	}
 	
 	@Override

@@ -9,8 +9,8 @@ import com.toxicfrog.utils.Vector2D;
 
 public class EnemyShot extends EnemyProjectile {
 
-	public EnemyShot(Level level, Vector2D position, Vector2D targetPosition, Player player, Enemy enemy) {
-		super(level, "extras/bulletEnemy.png", position, targetPosition, 0.15, 5.0, 500, player, enemy);
+	public EnemyShot(Level level, Vector2D position, Vector2D targetPosition, double speed, double distance, Player player, Enemy enemy) {
+		super(level, "extras/bulletEnemy.png", position, targetPosition, 0.15, speed, distance, player, enemy);
 		
 		boundingBox.widthScale = 0.5;
 		boundingBox.heightScale = 0.5;

@@ -4,6 +4,7 @@ import com.toxicfrog.cache.ImageCache;
 import com.toxicfrog.camera.Camera;
 import com.toxicfrog.entities.Entity;
 import com.toxicfrog.entities.Object;
+import com.toxicfrog.entities.effects.Puff02;
 import com.toxicfrog.enums.ENUMS.ENTITYTYPE;
 import com.toxicfrog.input.Input;
 import com.toxicfrog.level.Level;
@@ -16,10 +17,10 @@ public class Projectile extends Object {
 
 	public Vector2D startPosition = new Vector2D();
 	public Vector2D targetPosition;
-	public int maxDistance;
-	public int distance;
+	public double maxDistance;
+	public double distance;
 
-	public Projectile(Level level, String imagePath, Vector2D position, Vector2D targetPosition, double scale, double speed, int maxDistance) {
+	public Projectile(Level level, String imagePath, Vector2D position, Vector2D targetPosition, double scale, double speed, double maxDistance) {
 		super(level, ENTITYTYPE.PROJECTILE, imagePath, null, position, 0, scale, speed, false);
 
 		this.startPosition = new Vector2D(position);
@@ -50,19 +51,25 @@ public class Projectile extends Object {
 		if (distance <= maxDistance) {
 			position.add(velocity);
 		} else {
-			destroy();
+			delete();
 		}
 		
 		if (level != null) {
 			for (Entity entity : level.collidingEntities) {
 				if (checkCollission(entity, ENTITYTYPE.OBJECT)) {
-					destroy();
+					delete();
 	            	break;
 				}
 			}
 		} else {
 			destroy();
 		}
+	}
+	
+	public void delete() {
+		new Puff02(level, new Vector2D(position.x, position.y), width * 3);
+		
+		destroy();
 	}
 	
 	@Override

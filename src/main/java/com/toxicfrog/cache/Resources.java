@@ -423,6 +423,12 @@ public class Resources {
 		texturesPaths.put(Path.TEXTURE_PATH + "effects/smoke01_3.png", null);
 		texturesPaths.put(Path.TEXTURE_PATH + "effects/smoke01_4.png", null);
 		texturesPaths.put(Path.TEXTURE_PATH + "effects/smoke01_5.png", null);
+		texturesPaths.put(Path.TEXTURE_PATH + "effects/death_0.png", null);
+		texturesPaths.put(Path.TEXTURE_PATH + "effects/death_1.png", null);
+		texturesPaths.put(Path.TEXTURE_PATH + "effects/death_2.png", null);
+		texturesPaths.put(Path.TEXTURE_PATH + "effects/puff_0.png", null);
+		texturesPaths.put(Path.TEXTURE_PATH + "effects/puff_1.png", null);
+		texturesPaths.put(Path.TEXTURE_PATH + "effects/puff_2.png", null);
 		
 		soundPaths.add(MUSIC_01);
 		soundPaths.add(MUSIC_02);

@@ -62,7 +62,7 @@ public class PlayerProjectile extends Projectile {
 				            lastIntersectedEnemy = entity;
 				            
 				            if (puncture <= 0) {
-				            	destroy();
+				            	delete();
 				            	break;
 				            }	
 						}
@@ -72,6 +72,12 @@ public class PlayerProjectile extends Projectile {
 		} else {
 			destroy();
 		}
+	}
+	
+	@Override
+	public void delete() {
+		super.delete();
+
 	}
 	
 	@Override

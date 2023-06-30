@@ -1,5 +1,6 @@
 package com.toxicfrog.entities.characters;
 
+import com.toxicfrog.balancing.CoreBalance;
 import com.toxicfrog.cache.Resources;
 import com.toxicfrog.cache.SoundCache;
 import com.toxicfrog.camera.Camera;
@@ -25,7 +26,7 @@ public class Player extends NPC {
 	public double energy = 100;
 	public double energyRecover = 0.5;
 	public double lifeRecover = 0.05;
-	public double magnify = 0.0;
+	public double magnify = 1.0;
 	public int playerLevel = 0;
 	public int maxExp = 50;
 	public int exp = 0;
@@ -39,9 +40,9 @@ public class Player extends NPC {
 		life = maxLife;
 		maxEnergy = 100;
 		energy = maxEnergy;
-		energyRecover = 0.25;
-		lifeRecover = 0.015;
-		magnify = 0.0;
+		energyRecover = CoreBalance.CHARACTER_ENERGY_RECOVER;
+		lifeRecover = CoreBalance.CHARACTER_LIFE_RECOVER;
+		magnify = CoreBalance.CHARACTER_MAGNIFY;
 		playerLevel = 0;
 		maxExp = 50;
 		exp = 0;
@@ -67,21 +68,21 @@ public class Player extends NPC {
 			}
 			
 			if (input.isKeyPressed(KeyCode.SHIFT)) {
-				if (energy > 0) {
+				if (energy > CoreBalance.CHARACTER_SPRINT_COSTS) {
 					isRunning = true;
 				}
 			}
 			
 			if (input.isKeyPressed(KeyCode.SPACE)) {
-				if (energy > 0) {
+				if (energy > CoreBalance.CHARACTER_ROLL_COSTS) {
 					roll();
 				}
 			}
 			
 			if (isRunning) {
 				if (energy > 0) {
-					speed *= 1.5;
-					energy -= (0.5 * delta);
+					speed *= 2.0;
+					energy -= ((CoreBalance.CHARACTER_SPRINT_COSTS / 10) * delta);
 				} else {
 					isRunning = false;
 				}
@@ -89,8 +90,8 @@ public class Player extends NPC {
 			
 			if (isRolling) {
 				if (energy > 0) {
-					speed *= 2.5;
-					energy -= (0.75 * delta);
+					speed *= 3.0;
+					energy -= ((CoreBalance.CHARACTER_ROLL_COSTS / 10) * delta);
 				} else {
 					isRolling = false;
 				}
