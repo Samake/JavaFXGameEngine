@@ -43,6 +43,9 @@ public class GameLauncher extends Application {
     @Override
     public void start(Stage primaryStage) {
     	GameLauncher.primaryStage = primaryStage;
+    	
+    	System.setProperty("prism.order", "sw");
+    	System.setProperty("prism.forceGPU", "true");
 
     	primaryStage.setFullScreenExitKeyCombination(KeyCombination.valueOf("Alt+F4"));
     	primaryStage.setFullScreenExitHint("");

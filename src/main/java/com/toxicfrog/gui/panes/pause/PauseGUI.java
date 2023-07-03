@@ -1,26 +1,20 @@
-package com.toxicfrog.gui.panes;
+package com.toxicfrog.gui.panes.pause;
 
 import com.toxicfrog.camera.Camera;
 import com.toxicfrog.core.GameLauncher;
-import com.toxicfrog.enums.ENUMS.GAMESTATE;
 import com.toxicfrog.game.Game;
 import com.toxicfrog.gui.GameScene;
 import com.toxicfrog.logging.Log;
 import com.toxicfrog.settings.Settings;
 
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Popup;
 
 public class PauseGUI extends Popup {
 
-	private GameScene gameScene;
-	private VBox guiPane = new VBox();
+	private BorderPane guiPane = new BorderPane();
 	
 	public PauseGUI(GameScene gameScene) {
-		
-		this.gameScene = gameScene;
 		
 		double popupWidth = Settings.WINDOW_WIDTH;
         double popupHeight = Settings.WINDOW_HEIGHT;
@@ -40,19 +34,12 @@ public class PauseGUI extends Popup {
 		guiPane.setPrefSize(popupWidth - (xGap * 2), popupHeight - (yGap * 2));
 		guiPane.setMaxSize(popupWidth - (xGap * 2), popupHeight - (yGap * 2));
 		guiPane.setMinSize(popupWidth - (xGap * 2), popupHeight - (yGap * 2));
+		guiPane.getStyleClass().add("menu-box");
 		
-		Label test = new Label("PAUSE");
-		test.getStyleClass().add("gui-label");
 		
-		Button mainMenuButton = new Button("Hauptmenü");
-		mainMenuButton.getStyleClass().add("button-orange");
+		guiPane.setTop(new PauseTitle());
+		guiPane.setBottom(new PauseButtons(gameScene));
 
-	    mainMenuButton.setOnAction(event -> {
-	    	gameScene.setState(GAMESTATE.MAIN);
-	    });
-		
-		guiPane.getChildren().addAll(test, mainMenuButton);
-		
 		getContent().add(guiPane);
         
         Log.print("PauseGUI were initialized!");

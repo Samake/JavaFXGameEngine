@@ -1,4 +1,4 @@
-package com.toxicfrog.gui.panes;
+package com.toxicfrog.gui.panes.settings;
 
 import com.toxicfrog.cache.ImageCache;
 import com.toxicfrog.cache.Resources;

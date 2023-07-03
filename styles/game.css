@@ -1,19 +1,34 @@
 /* COLORS */
 .root {
-	-palette-dark: #091014;
+	-palette-dark-gray: #020202;
 	-palette-gray: #111111;
 	-palette-light-gray: #333333;
+	
+	-palette-dark-red: #a00b27;
 	-palette-red: #ff1031;
+	-palette-light-red: #ff1031;
+	
+	-palette-light-orange: #ffbf33;
 	-palette-orange: #ff9a00;
+	-palette-dark-orange: #c66d00;
+	
+	-palette-light-yellow: #ffffb2;
 	-palette-yellow: #ffff96;
+	-palette-dark-yellow: #e6e682;
+	
+	-palette-light-green: #7ad861;
 	-palette-green: #55c538;
+	-palette-dark-green: #3a882d;
+	
+	-palette-light-blue: #36b3ff;
 	-palette-blue: #1199ff;
+	-palette-dark-blue: #0e77cc;
 }
 
 /* Loading Pane */
 .loading-pane {
-    -fx-background-color: radial-gradient(center 50% 50%, radius 65%, -palette-gray, -palette-dark);
-    -fx-border-color: -palette-dark;
+    -fx-background-color: radial-gradient(center 50% 50%, radius 65%, -palette-gray, -palette-dark-gray);
+    -fx-border-color: -palette-dark-gray;
     -fx-border-width: 1px;
     -fx-border-radius: 5px;
 }
@@ -24,12 +39,12 @@
 
 /* Loading Bar */
 .loading-bar .bar {
-    -fx-accent: -palette-red;
+	-fx-background-color: linear-gradient(to bottom, -palette-dark-red, -palette-light-red, -palette-dark-red);
 }
 
 .loading-bar .track {
-    -fx-background-color: -palette-light-gray;
-    -fx-border-color: -palette-dark;
+    -fx-background-color: linear-gradient(to bottom, -palette-dark-gray, -palette-light-gray, -palette-dark-gray);
+    -fx-border-color: -palette-dark-gray;
     -fx-border-width: 4px;
 }
 
@@ -67,7 +82,7 @@
 
 /* Buttons */
 .button-green {
-    -fx-background-color: linear-gradient(to left, -palette-gray, -palette-green, -palette-gray);
+    -fx-background-color: linear-gradient(to bottom, -palette-dark-green, -palette-light-green, -palette-dark-green);
     -fx-text-fill: -palette-gray;
     -fx-font-size: 18px;
     -fx-pref-width: 180px;
@@ -81,19 +96,19 @@
 }
 
 .button-green:hover {
-    -fx-background-color: linear-gradient(to left, -palette-green, -palette-gray, -palette-green);
+    -fx-background-color: linear-gradient(to bottom, -palette-light-green, -palette-dark-green, -palette-light-green);
     -fx-text-fill: -palette-yellow;
     -fx-border-color: -palette-yellow;
 }
 
 .button-green:pressed {
-    -fx-background-color: linear-gradient(to left, -palette-gray, -palette-green, -palette-gray);
+    -fx-background-color: linear-gradient(to bottom, -palette-dark-green, -palette-light-green, -palette-dark-green);
     -fx-text-fill: -palette-red;
     -fx-border-color: -palette-gray;
 }
 
 .button-yellow {
-    -fx-background-color: linear-gradient(to left, -palette-gray, -palette-yellow, -palette-gray);
+    -fx-background-color: linear-gradient(to bottom, -palette-dark-yellow, -palette-light-yellow, -palette-dark-yellow);
     -fx-text-fill: -palette-gray;
     -fx-font-size: 18px;
     -fx-pref-width: 180px;
@@ -107,19 +122,19 @@
 }
 
 .button-yellow:hover {
-    -fx-background-color: linear-gradient(to left, -palette-yellow, -palette-gray, -palette-yellow);
+    -fx-background-color: linear-gradient(to bottom, -palette-light-yellow, -palette-dark-yellow, -palette-light-yellow);
     -fx-text-fill: -palette-yellow;
     -fx-border-color: -palette-yellow;
 }
 
 .button-yellow:pressed {
-    -fx-background-color: linear-gradient(to left, -palette-gray, -palette-yellow, -palette-gray);
+    -fx-background-color: linear-gradient(to bottom, -palette-dark-yellow, -palette-light-yellow, -palette-dark-yellow);
     -fx-text-fill: -palette-red;
     -fx-border-color: -palette-gray;
 }
 
 .button-orange {
-    -fx-background-color: linear-gradient(to left, -palette-gray, -palette-orange, -palette-gray);
+    -fx-background-color: linear-gradient(to bottom, -palette-dark-orange, -palette-light-orange, -palette-dark-orange);
     -fx-text-fill: -palette-gray;
     -fx-font-size: 18px;
     -fx-pref-width: 180px;
@@ -133,19 +148,19 @@
 }
 
 .button-orange:hover {
-    -fx-background-color: linear-gradient(to left, -palette-orange, -palette-gray, -palette-orange);
+    -fx-background-color: linear-gradient(to bottom, -palette-light-orange, -palette-dark-orange, -palette-light-orange);
     -fx-text-fill: -palette-yellow;
     -fx-border-color: -palette-yellow;
 }
 
 .button-orange:pressed {
-    -fx-background-color: linear-gradient(to left, -palette-gray, -palette-orange, -palette-gray);
+    -fx-background-color: linear-gradient(to bottom, -palette-dark-orange, -palette-light-orange, -palette-dark-orange);
     -fx-text-fill: -palette-red;
     -fx-border-color: -palette-gray;
 }
 
 .button-blue {
-    -fx-background-color: linear-gradient(to left, -palette-gray, -palette-blue, -palette-gray);
+    -fx-background-color: linear-gradient(to bottom, -palette-dark-blue, -palette-light-blue, -palette-dark-blue);
     -fx-text-fill: -palette-gray;
     -fx-font-size: 18px;
     -fx-pref-width: 180px;
@@ -159,19 +174,19 @@
 }
 
 .button-blue:hover {
-    -fx-background-color: linear-gradient(to left, -palette-blue, -palette-gray, -palette-blue);
+    -fx-background-color: linear-gradient(to bottom, -palette-light-blue, -palette-dark-blue, -palette-light-blue);
     -fx-text-fill: -palette-yellow;
     -fx-border-color: -palette-yellow;
 }
 
 .button-blue:pressed {
-    -fx-background-color: linear-gradient(to left, -palette-gray, -palette-blue, -palette-gray);
+    -fx-background-color: linear-gradient(to bottom, -palette-dark-blue, -palette-light-blue, -palette-dark-blue);
     -fx-text-fill: -palette-red;
     -fx-border-color: -palette-gray;
 }
 
 .button-red {
-    -fx-background-color: linear-gradient(to left, -palette-gray, -palette-red, -palette-gray);
+    -fx-background-color: linear-gradient(to bottom, -palette-dark-red, -palette-light-red, -palette-dark-red);
     -fx-text-fill: -palette-gray;
     -fx-font-size: 18px;
     -fx-pref-width: 180px;
@@ -185,19 +200,19 @@
 }
 
 .button-red:hover {
-    -fx-background-color: linear-gradient(to left, -palette-red, -palette-gray, -palette-red);
+    -fx-background-color: linear-gradient(to bottom, -palette-light-red, -palette-dark-red, -palette-light-red);
     -fx-text-fill: -palette-yellow;
     -fx-border-color: -palette-yellow;
 }
 
 .button-red:pressed {
-    -fx-background-color: linear-gradient(to left, -palette-gray, -palette-red, -palette-gray);
+    -fx-background-color: linear-gradient(to bottom, -palette-dark-red, -palette-light-red, -palette-dark-red);
     -fx-text-fill: -palette-red;
     -fx-border-color: -palette-gray;
 }
 
 .button-gray {
-    -fx-background-color: linear-gradient(to left, -palette-gray, -palette-light-gray, -palette-gray);
+    -fx-background-color: linear-gradient(to bottom, -palette-dark-gray, -palette-light-gray, -palette-dark-gray);
     -fx-text-fill: -palette-gray;
     -fx-font-size: 18px;
     -fx-pref-width: 180px;
@@ -211,19 +226,27 @@
 }
 
 .button-gray:hover {
-    -fx-background-color: linear-gradient(to left, -palette-light-gray, -palette-gray, -palette-light-gray);
+    -fx-background-color: linear-gradient(to bottom, -palette-light-gray, -palette-dark-gray, -palette-light-gray);
     -fx-text-fill: -palette-yellow;
     -fx-border-color: -palette-yellow;
 }
 
 .button-gray:pressed {
-    -fx-background-color: linear-gradient(to left, -palette-gray, -palette-light-gray, -palette-gray);
+    -fx-background-color: linear-gradient(to bottom, -palette-dark-gray, -palette-light-gray, -palette-dark-gray);
     -fx-text-fill: -palette-red;
     -fx-border-color: -palette-gray;
 }
 
 
 /* GUI Label Bold */
+.gui-label-red-bold {
+    -fx-font-weight: bold;
+    -fx-font-family: "Hardpixel";
+    -fx-text-fill: -palette-red;
+    -fx-font-size: 18px;
+    -fx-effect: dropshadow(gaussian, -palette-gray, 3, 3, 0, 0);
+}
+
 .gui-label-bold {
     -fx-font-weight: bold;
     -fx-font-family: "Hardpixel";
@@ -290,8 +313,8 @@
 }
 
 .image-button-box {
-	-fx-background-color: radial-gradient(center 50% 50%, radius 65%, -palette-light-gray, -palette-dark);
-	-fx-border-color: -palette-dark;
+	-fx-background-color: radial-gradient(center 50% 50%, radius 65%, -palette-light-gray, -palette-dark-gray);
+	-fx-border-color: -palette-dark-gray;
     -fx-border-width: 4px;
 	-fx-padding: 20px;
 }
@@ -307,7 +330,7 @@
 }
 
 .image-button-box-selected {
-	-fx-background-color: radial-gradient(center 50% 50%, radius 65%, -palette-green, -palette-dark);
+	-fx-background-color: radial-gradient(center 50% 50%, radius 65%, -palette-light-green, -palette-dark-green);
 	-fx-border-color: -palette-green;
     -fx-border-width: 4px;
 	-fx-padding: 20px;
@@ -315,35 +338,35 @@
 
 /* LifeBar */
 .life-bar .bar {
-    -fx-accent: #44EE44;
+	-fx-background-color: linear-gradient(to bottom, -palette-dark-green, -palette-light-green, -palette-dark-green);
 }
 
 .life-bar .track {
-    -fx-background-color: #303030;
-    -fx-border-color: black;
-    -fx-border-width: 2px;
+    -fx-background-color: linear-gradient(to bottom, -palette-dark-gray, -palette-light-gray, -palette-dark-gray);
+    -fx-border-color: -palette-dark-gray;
+    -fx-border-width: 4px;
 }
 
 /* EnergyBar */
 .energy-bar .bar {
-    -fx-accent: #EEEE44;
+	-fx-background-color: linear-gradient(to bottom, -palette-dark-orange, -palette-light-orange, -palette-dark-orange);
 }
 
 .energy-bar .track {
-    -fx-background-color: #303030;
-    -fx-border-color: black;
-    -fx-border-width: 2px;
+    -fx-background-color: linear-gradient(to bottom, -palette-dark-gray, -palette-light-gray, -palette-dark-gray);
+    -fx-border-color: -palette-dark-gray;
+    -fx-border-width: 4px;
 }
 
 /* EnergyBar */
 .exp-bar .bar {
-    -fx-accent: #4444EE;
+	-fx-background-color: linear-gradient(to bottom, -palette-dark-blue, -palette-light-blue, -palette-dark-blue);
 }
 
 .exp-bar .track {
-    -fx-background-color: #303030;
-    -fx-border-color: black;
-    -fx-border-width: 2px;
+    -fx-background-color: linear-gradient(to bottom, -palette-dark-gray, -palette-light-gray, -palette-dark-gray);
+    -fx-border-color: -palette-dark-gray;
+    -fx-border-width: 4px;
 }
 
 /* Tabs */
@@ -537,14 +560,14 @@
 /* Slider */
 .slider .track {
     -fx-background-color: -palette-light-gray;
-    -fx-border-color: -palette-dark;
+    -fx-border-color: -palette-dark-gray;
     -fx-border-width: 2px;
 }
 
 .slider .thumb {
     -fx-background-color: -palette-green;
     -fx-background-radius: 5px;
-    -fx-border-color: -palette-dark;
+    -fx-border-color: -palette-dark-gray;
     -fx-border-width: 2px;
 }
 
@@ -573,7 +596,7 @@
 }
 
 .slider .value-label {
-    -fx-background-color: -palette-dark;
+    -fx-background-color: -palette-dark-gray;
     -fx-text-fill: -palette-light-gray;
     -fx-font-family: "Hardpixel";
     -fx-font-size: 12px;
@@ -598,4 +621,9 @@
     -fx-stroke: -palette-light-gray;
     -fx-stroke-width: 1px;
     -fx-pref-height: 4px;
+}
+
+/* Menu Box */
+.menu-box {
+    -fx-background-color: rgba(0, 0, 0, 0.3);
 }

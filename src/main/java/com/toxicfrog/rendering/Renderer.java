@@ -24,6 +24,9 @@ public class Renderer {
 
 	private GraphicsContext context;
 	
+	private Color greenColor = Color.rgb(85, 197, 56);
+	private Color redColor = Color.rgb(255, 16, 49);
+	
 	public Renderer() {
 		Log.print("Renderer were initialized!");
 	}
@@ -149,7 +152,7 @@ public class Renderer {
 						posX = (enemy.position.x - (barWidth / 2)) - camera.position.x;
 						posY = (enemy.position.y - (barHeight * 2)) - camera.position.y;
 						
-						context.setFill(Color.DARKRED);
+						context.setFill(redColor);
 						context.fillRoundRect(posX, posY, barWidth, barHeight, 15, 15);
 						
 						double healthWidth = (barWidth / enemy.maxLife) * enemy.life;
@@ -160,7 +163,7 @@ public class Renderer {
 								healthWidth = barWidth;
 							}
 							
-							context.setFill(Color.GREEN);
+							context.setFill(greenColor);
 							context.fillRoundRect(posX, posY, healthWidth, barHeight, 15, 15);
 						}
 					}
